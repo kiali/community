@@ -3,7 +3,7 @@
 En este taller veremos como configurar una red de servicios en nuestra arquitectura de microservicios con Istio Service Mesh, de código abierto, y configurar Kiali como interfaz Gráfica. 
 Veremos los beneficios que aporta a nivel de seguridad y observabilidad. 
 
-# Porqué un service Mesh
+## Porqué un service Mesh
 
 En el desarrollo tradicionales, encontramos grandes aplicaciones monoliticas donde teníamos un mismo programa que se ejecutaba la misma plataforma. Como podemos pensar en aplicaciones java web empaquetadas en un archivo .war.
 
@@ -33,7 +33,7 @@ Entre estos beneficios están:
 
 ![servicemesh](images/service-mesh.png)
 
-# Que es Istio
+## Que es Istio
 
 Istio es una Service Mesh de código abierto que se superpone de forma transparente a las aplicaciones distribuidas. Podemos añadirlo de forma transparente a nuestra arquitectura de microservicios para incluir todos los beneficios de un Service Mesh.
 
@@ -44,9 +44,11 @@ En la siguiente imagen podemos ver la arquitectura de Istio:
 * Data plane. 
 * Control plane. 
 
-Istio funciona con sidecars, un proxy que se despliega en cada contenedor de nuestros 
+Istio funciona con sidecars, un proxy que se despliega en cada contenedor de nuestros workloads que hayamos incluido en la Mesh. Un proxy Envoy, que funciona a nivel de capa 7 en el data plane y aplica todas las politicas que hayamos configuration. 
 
-# Que es Kiali
+Existe otro modo de funcionamiento de Istio llamado Ambient, en fase beta, que se comentará más adelante. 
+
+## Que es Kiali
 
 Kiali es una interfaz gráfica para Istio, que interpreta los datos producidos por Istio y los muestra a través de gráficos de tráfico, gráficos de la Mesh y diagramas. Nos permite visualizar fácilmente todos los datos disponibles para nuestras aplicaciones, trazas, logs, y tambien nos ayuda a encontrar problemas en la Mesh. 
 
@@ -57,12 +59,80 @@ En la siguiente imagen se puede ver la arquitectura de Kiali, con los servicios 
 ![kiali](images/kiali-architecture.png)
 
 
-# Requisitos
+# Instalación paso a paso 
+## Prerrequisitos
 
 En este tutorial emplearemos Minikube, una herramienta de código abierto que permite crear y administrar clústeres de Kubernetes en un entorno local. 
 
-Para ello se necesita: 
+Para ello se necesitarán privilegios de administrador. 
 
-* Privilegios de administrador
-* 
-- Minikube 
+Que necesitamos descargar: 
+
+- Descargamos la herramienta de la linea de comandos de kubernetes [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
+- Descargamos la última version de [minikube](https://kubernetes.io/docs/tasks/tools/#minikube)
+- Descargamos un [hipervisor](https://minikube.sigs.k8s.io/docs/start/?arch=%2Flinux%2Fx86-64%2Fstable%2Fbinary+download#install-a-hypervisor) para minikube. Se puede usar Docker, podman, VistualBox...  
+
+Si no estamos usando el driver por defecto de minikube, lo podemos configurar así: 
+
+`minikube config set driver kvm2`
+
+Arrancamos minikube con este comando: 
+
+`minikube start`
+
+Si los recursos por defecto no fueran suficientes, podemos arrancarlo con el siguiente comando: 
+
+`minikube start --memory=16384 --cpus=4`
+
+## Instando Istio
+
+En esta sección, veremos cómo instalar istio en modo Sidecar. 
+Istio se puede instalar de varias formas, en este caso utilizaremos la herramienta de linea de comandos istioctl.
+
+- Descargamos [istio](https://istio.io/latest/docs/setup/additional-setup/download-istio-release/)
+  
+`curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.23.2 TARGET_ARCH=x86_64 sh -`
+- Vamos a la carpeta descargada:
+  
+`cd istio-1.23.2`
+- Añadimos el cliente al path (Linux):
+
+`export PATH=$PWD/bin:$PATH`
+
+- Instalamos istio con el perfil por defecto:
+
+`istioctl install`
+
+Si necesitamos pasar algun valor de configuración, lo podemos hacer con --set: 
+
+`istioctl install --set meshConfig.accessLogFile=/dev/stdout`
+
+Otra forma de configuración sería: 
+
+```
+cat <<EOF > ./my-config.yaml
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+spec:
+  meshConfig:
+    accessLogFile: /dev/stdout
+EOF
+```
+
+`istioctl install -f my-config.yaml`
+
+# TODO
+## Instalando Kiali 
+...
+
+## Instando addons
+..
+
+## Instalando una aplicación de demo: Bookinfo
+...
+
+## Aplicando ejemplos: 
+...
+
+# Istio y Ambient
+...
