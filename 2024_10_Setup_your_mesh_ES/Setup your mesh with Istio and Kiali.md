@@ -31,7 +31,7 @@ Entre estos beneficios están:
 * Gestión de tráfico: A través de reglas de enrutado podemos controlar el flujo de tráfico aplicado en diferentes capas. 
 * Seguridad: Aporta encriptación de las comunicaciones con TLS y nos permite introducir políticas y auditoría de acceso. 
 
-image:https://user-images.githubusercontent.com/6889074/87819080-ad099980-c839-11ea-834b-56eec038ce4d.png[servicemesh]
+![servicemesh](images/service-mesh.png)
 
 # Que es Istio
 
@@ -39,7 +39,7 @@ Istio es una Service Mesh de código abierto que se superpone de forma transpare
 
 En la siguiente imagen podemos ver la arquitectura de Istio: 
 
-image:https://user-images.githubusercontent.com/6889074/87819080-ad099980-c839-11ea-834b-56eec038ce4d.png[istio]
+![istio](images/istio-architecture.png)
 
 * Data plane. 
 * Control plane. 
@@ -54,7 +54,7 @@ Además, a través de Kiali podremos crear con wizards de forma sencilla diferen
 
 En la siguiente imagen se puede ver la arquitectura de Kiali, con los servicios necesarios y opcionales: 
 
-image:https://user-images.githubusercontent.com/6889074/87819080-ad099980-c839-11ea-834b-56eec038ce4d.png[kiali]
+![kiali](images/kiali-architecture.png)
 
 
 # Requisitos
