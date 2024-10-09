@@ -121,12 +121,37 @@ EOF
 
 `istioctl install -f my-config.yaml`
 
-# TODO
-## Instalando Kiali 
-...
+It is possible to list all the different profiles: 
+
+`istioctl profile list` 
+
+Instalaremos tambien los CRDs del Gateway API, que no estan instalados por defecto: 
+
+`get crd gateways.gateway.networking.k8s.io &> /dev/null || \
+{ kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd?ref=v1.1.0" | kubectl apply -f -; }`
 
 ## Instando addons
-..
+Kiali requiere Prometheus para funcionar correctamente, por lo que lo instalaremos de la siguiente forma: 
+
+`kubectl apply -f ${ISTIO_HOME}/samples/addons/prometheus.yaml`
+
+Grafana y Jaeger son opcionales, pero tambien los instalaremos para ver toda la funcionalidad disponible en Kiali: 
+
+`kubectl apply -f ${ISTIO_HOME}/samples/addons/grafana.yaml`
+`kubectl apply -f ${ISTIO_HOME}/samples/addons/jaeger.yaml`
+
+## Instalando Kiali 
+La forma más sencilla de instalar Kiali es applicando el yaml de configuration que viene como un addon de Istio: 
+
+`kubectl apply -f ${ISTIO_HOME}/samples/addons/kiali.yaml`
+
+Esta no es la forma recomendada para instalar en entornos de producción, pero si para testing o como una forma rápida de instalar y probar. 
+
+## Comprobando que todo esté instalado
+Vamos a comprobar que tengamos todo instalado. 
+Vamos a listar los despliegues, pods y servicios que tenemos en el namespace de istio (istio-system): 
+
+`kubectl get all -n istio-system`
 
 ## Instalando una aplicación de demo: Bookinfo
 ...
