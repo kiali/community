@@ -131,7 +131,7 @@ EOF
 ## Instalando una aplicación de demo: Bookinfo
 ...
 
-## Aplicando ejemplos: 
+## Aplicando configuraciones  
 ...
 
 # Istio y Ambient
