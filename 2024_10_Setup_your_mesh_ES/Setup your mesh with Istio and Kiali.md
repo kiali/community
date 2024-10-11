@@ -251,7 +251,36 @@ Con varias peticiones, vemos el Gráfico del Tráfico algo similar a esto:
 
 ![kiali](images/bookinfo-graph.png)
 
-Al añadir nuestra aplicación en la mesh, Istio genera métricas en prometheus. Kiali puede interpretar estos datos y en base a esto, nos muestra este gráfico.
+Al añadir nuestra aplicación en la mesh, Istio genera métricas en prometheus. Kiali puede interpretar estos datos y en base a estas métricas, nos muestra este gráfico.
+Aquí podemos ver de forma sencilla que microservicios componen nuestra aplicación, así como el flujo de comunicación. 
+
+Podemos seleccionar distintos datos a mostrar. 
+
+El color de la flecha, nos muestra cual es el protocolo de la comunicación, y tambien el estado. Cuando vemos una fecha verde, nos indica que ha sido una petición HTTP y con código 200 (OK). 
+
+### Abrir la aplicación al tráfico exterior
+
+Vamos a hacer la aplicación accesible desde fuera de la Mesh. Para ello, crearemos un ingress gateway, que se encarga de mapear un path a una ruta desde la entrada de la Mesh. 
+
+`kubectl apply -f samples/bookinfo/gateway-api/bookinfo-gateway.yaml -n bookinfo`
+
+Vamos a cambiar el valor por defecto del tipo de Gateway, el cual se crea como un LoadBalancer, a ClusterIP: 
+
+`kubectl annotate gateway bookinfo-gateway networking.istio.io/service-type=ClusterIP --namespace=bookinfo`
+
+Y podemos ver el estado del gateway: 
+
+`kubectl get gateway -n bookinfo`
+
+Ahora podemos conectarnos al servicio de productpage a través de este gateway: 
+
+`kubectl port-forward svc/bookinfo-gateway-istio -n bookinfo 8080:80`
+
+Accediendo desde el navegador: 
+
+`http://localhost:8080/productpage`
+
+![kiali](images/productpage.png)
 
 
 ## Aplicando configuraciones
