@@ -1,6 +1,5 @@
 name: Build and Deploy
 
-
 on:
   push:
     branches:
@@ -19,10 +18,13 @@ jobs:
           node-version: "20"
           cache: yarn
           cache-dependency-path: website/yarn.lock   
-
+      - name: Update events
+        run: |
+          echo "Updating"   
+          make generate_event_json
       - name: Install and Build 🔧
         env:
-         PUBLIC_URL: https://kiali.github.io/community/
+         PUBLIC_URL: https://kiali.org/community/
         run: make build          
 
       - name: Deploy 🚀

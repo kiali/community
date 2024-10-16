@@ -1,0 +1,44 @@
+name: Pull Metrics
+
+on:
+  schedule:
+  # Every night at 04:00 (UTC)
+    - cron: "0 4 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest    
+    env:
+      KIALI_API_TOKEN: '${{ secrets.KIALI_API_TOKEN }}'
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v4 # checkout the repository content
+
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' # install the python version needed
+
+      - name: install python packages
+        run: |          
+          python -m pip install --upgrade pip
+          pip install -r scripts/api_gh/requirements.txt
+
+      - name: execute py script # run main.py
+        run: make generate_metrics_json
+      - name: Configure git
+        run: |
+          git config user.email 'kiali-dev@googlegroups.com'
+
+          git config user.name 'kiali-bot'         
+      - name: Update metrics file
+        run: |
+          if [[ `git status --porcelain` ]]; then
+            echo -e "\e[1;32mOK\e[0m \e[1;39mMetrics json change detected.\e[0m"
+            git add website/src/data/metrics.json
+            git commit -m "Update metrics.json"
+            git push origin
+          else
+            echo -e "\e[1;39mNo changes were detected.\e[0m"
+          fi
+        shell: bash    

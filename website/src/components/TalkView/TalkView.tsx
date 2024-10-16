@@ -1,0 +1,37 @@
+import React from "react";
+import Markdown from 'react-markdown'
+
+export const TalkView = (props: {type: string, link: string}) => {   
+    const [content, setContent] = React.useState<string>("# Hey")
+
+    React.useEffect(() => {
+        if(props.type === 'markdown'){  
+            const fetchMarkdown = async () => {
+                // get the data from the api
+                const data = await fetch(props.link);
+                const mark = await data.text()
+                setContent(mark);
+                }
+            fetchMarkdown() 
+            
+            // make sure to catch any error
+                .catch(console.error);   
+        }       
+    }, [props])
+    
+    
+   
+    return (
+        <>
+
+            {props.type === 'markdown' && (
+                <Markdown>{content}</Markdown>
+            )}
+            {props.type === 'youtube' && (
+                <div style={{marginTop: "10px"}}>
+                <iframe width="100%" height="500" src={props.link} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
+                </div>
+            )}
+        </>
+    )
+}

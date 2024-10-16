@@ -1,0 +1,14 @@
+{
+	"date": "2024-06-21",
+	"place": "Brno, Czech Republic",
+	"eventName": "DevConf",
+	"description": "Microservices architecture has become a cornerstone in modern application development, offering scalability, agility, and flexibility. However, managing the complexity of microservices can be challenging, and that's where Kiali comes into play. In this talk, we'll explore the powerful capabilities of Kiali as an observability and management platform for Kubernetes applications.Microservices introduce a new set of challenges in terms of monitoring, tracing, and understanding the interactions between services. Kiali, an open-source project, simplifies these complexities by providing a visual representation of the microservices topology, along with advanced monitoring and troubleshooting features",
+	"talkName": "Kiali Beyond the Graph – Troubleshooting Istio",
+	"lang": "EN",
+	"type": "talk",
+	"presentation": {
+		"type" : "youtube",
+		"link": "https://www.youtube.com/embed/aM6fslVXbZc?si=BbvRinEiPQWfXU0S"
+	},	
+	"folder_path": "https://www.youtube.com/watch?v=aM6fslVXbZc"
+}

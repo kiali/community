@@ -1,0 +1,34 @@
+[
+    {
+        "date": "2024-10-26",
+        "place": "Malaga, Spain",
+        "eventName": "BiznagaFest",
+        "talkName": "Setup your mesh with Istio and Kiali",
+        "description": "En este taller los asistentes aprenderan a configurar Istio con Kiali y a como convivir con este entorno, aprenderan que les aporta y los beneficios que se obtienen a nivel de seguridad y observabilidad.",
+        "lang": "ES",
+        "type": "workshop",
+        "presentation": {
+            "type": "markdown",
+            "link": "https://raw.githubusercontent.com/kiali/community/refs/heads/main/2024_10_Setup_your_mesh_ES/Setup%20your%20mesh%20with%20Istio%20and%20Kiali.md"
+        },
+        "folder_path": "https://github.com/kiali/community/tree/main/2024_10_Setup_your_mesh_ES",
+        "path": "events/2024_10_Setup_your_mesh_ES",
+        "id": "236079110739"
+    },
+    {
+        "date": "2024-06-21",
+        "place": "Brno, Czech Republic",
+        "eventName": "DevConf",
+        "description": "Microservices architecture has become a cornerstone in modern application development, offering scalability, agility, and flexibility. However, managing the complexity of microservices can be challenging, and that's where Kiali comes into play. In this talk, we'll explore the powerful capabilities of Kiali as an observability and management platform for Kubernetes applications.Microservices introduce a new set of challenges in terms of monitoring, tracing, and understanding the interactions between services. Kiali, an open-source project, simplifies these complexities by providing a visual representation of the microservices topology, along with advanced monitoring and troubleshooting features",
+        "talkName": "Kiali Beyond the Graph \u2013 Troubleshooting Istio",
+        "lang": "EN",
+        "type": "talk",
+        "presentation": {
+            "type": "youtube",
+            "link": "https://www.youtube.com/embed/aM6fslVXbZc?si=BbvRinEiPQWfXU0S"
+        },
+        "folder_path": "https://www.youtube.com/watch?v=aM6fslVXbZc",
+        "path": "events/2024_06_Kiali_Beyond_the_Graph_Troubleshooting_Istio",
+        "id": "199230166611"
+    }
+]

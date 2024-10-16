@@ -1,0 +1,14 @@
+{
+	"date": "2024-10-26",
+	"place": "Malaga, Spain",
+	"eventName": "BiznagaFest",
+	"talkName": "Setup your mesh with Istio and Kiali",
+	"description": "En este taller los asistentes aprenderan a configurar Istio con Kiali y a como convivir con este entorno, aprenderan que les aporta y los beneficios que se obtienen a nivel de seguridad y observabilidad.",
+	"lang": "ES",
+	"type": "workshop",
+	"presentation": {
+		"type" : "markdown",
+		"link": "https://raw.githubusercontent.com/kiali/community/refs/heads/main/2024_10_Setup_your_mesh_ES/Setup%20your%20mesh%20with%20Istio%20and%20Kiali.md"
+	},	
+	"folder_path": "https://github.com/kiali/community/tree/main/2024_10_Setup_your_mesh_ES"
+}
