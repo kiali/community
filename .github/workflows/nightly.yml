@@ -1,15 +1,13 @@
 name: Pull Metrics
 
 on:
+  workflow_dispatch:
   schedule:
   # Every night at 04:00 (UTC)
     - cron: "0 4 * * *"
-
 jobs:
   build:
-    runs-on: ubuntu-latest    
-    env:
-      KIALI_API_TOKEN: '${{ secrets.KIALI_API_TOKEN }}'
+    runs-on: ubuntu-latest       
     steps:
       - name: checkout repo content
         uses: actions/checkout@v4 # checkout the repository content
@@ -17,14 +15,15 @@ jobs:
       - name: setup python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10' # install the python version needed
-
+          python-version: '3.10' # install the python version needed      
       - name: install python packages
         run: |          
           python -m pip install --upgrade pip
           pip install -r scripts/api_gh/requirements.txt
 
       - name: execute py script # run main.py
+        env:
+          KIALI_API_TOKEN: ${{ secrets.KIALI_API_TOKEN }}
         run: make generate_metrics_json
       - name: Configure git
         run: |
@@ -41,4 +40,25 @@ jobs:
           else
             echo -e "\e[1;39mNo changes were detected.\e[0m"
           fi
-        shell: bash    
+        shell: bash  
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: yarn
+          cache-dependency-path: website/yarn.lock   
+      - name: Update events
+        run: |
+          echo "Updating"   
+          make generate_event_json
+      - name: Install and Build 🔧
+        env:
+         PUBLIC_URL: https://kiali.org/community/
+        run: make build          
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: website/build          

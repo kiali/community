@@ -8,7 +8,7 @@
 	"type": "workshop",
 	"presentation": {
 		"type" : "markdown",
-		"link": "https://raw.githubusercontent.com/kiali/community/refs/heads/main/2024_10_Setup_your_mesh_ES/Setup%20your%20mesh%20with%20Istio%20and%20Kiali.md"
+		"link": "https://raw.githubusercontent.com/kiali/community/refs/heads/main/events/2024_10_Setup_your_mesh_ES/Setup%20your%20mesh%20with%20Istio%20and%20Kiali.md"
 	},	
 	"folder_path": "https://github.com/kiali/community/tree/main/2024_10_Setup_your_mesh_ES"
 }
