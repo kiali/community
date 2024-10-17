@@ -206,7 +206,7 @@ Vamos a hacer algunos cambios en la configuración de Kiali. Vamos a abrir el ya
 
 ```bash
 cp $ISTIO_HOME/samples/addons/kiali.yaml $ISTIO_HOME/samples/addons/kiali.copy.yaml
-vim ISTIO_HOME/samples/addons/kiali.yaml
+vim $ISTIO_HOME/samples/addons/kiali.yaml
 ```
 
 ```yaml
@@ -266,7 +266,7 @@ Consta de los siguientes microservicios:
 
 Hay 3 versiones del servicio de reviews:
 * v1: No llama a ratings.
-* v2: Llama a ratings, y visualiza cada puntuación con estrellas negras del 1 al 5.
+* v2: Llama a ratings, y visualiza cada puntuación con estrellas negras del 1 al 5.kubectl apply -f samples/bookinfo/gateway-api/bookinfo-gateway.yaml -n bookinfo
 * v3: Llama a ratings, y visualiza cada puntuación con estrellas rojas del 1 al 5.
 
 Vamos a desplegar la aplicación de bookinfo. Primero crearemos un namespace:
@@ -275,10 +275,17 @@ Vamos a desplegar la aplicación de bookinfo. Primero crearemos un namespace:
 kubectl create ns bookinfo
 ```
 
+Vamos a utilizar `GATEWAY API`vamos a asegurarnos estan todos los CRDs instalados con:
+
+```bash
+kubectl get crd gateways.gateway.networking.k8s.io &> /dev/null || \
+  { kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.1.0/standard-install.yaml; }
+
+```
 Una vez creado, vamos a desplegar la aplicación en este espacio de nombres:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.23/samples/bookinfo/platform/kube/bookinfo.yaml -n bookinfo
+kubectl apply -f $ISTIO_HOME/samples/bookinfo/platform/kube/bookinfo.yaml -n bookinfo
 ```
 
 Comprobar qeu tenemos todos los containers corriendo:
@@ -356,7 +363,7 @@ El color de la flecha, nos muestra cual es el protocolo de la comunicación, y t
 Vamos a hacer la aplicación accesible desde fuera de la Mesh. Para ello, crearemos un ingress gateway, que se encarga de mapear un path a una ruta desde la entrada de la Mesh. 
 
 ```bash
-kubectl apply -f samples/bookinfo/gateway-api/bookinfo-gateway.yaml -n bookinfo
+kubectl apply -f $ISTIO_HOME/samples/bookinfo/gateway-api/bookinfo-gateway.yaml -n bookinfo
 ```
 
 Vamos a cambiar el valor por defecto del tipo de Gateway, el cual se crea como un LoadBalancer, a ClusterIP: 
@@ -383,7 +390,45 @@ Accediendo desde el navegador:
 
 ![kiali](images/productpage.png)
 
+Vamos a mantener un generador de trafico en una terminal
 
+```bash
+while :; do curl -sS http://localhost:8080/productpage | grep -o "<title>.*</title>"; sleep 3; done > /dev/null
+
+```
+
+## Tracing
+
+Abrimos la consola de jaeger
+
+```bash
+istioctl dashboard jaeger
+```
+
+Como podemos observar no nos apareceran trazas relacionadas con `bookinfo`
+
+![jaeger](images/jaeger_no_traces.png)
+
+
+Esto es debido a que la comunicación se esta haciendo directamente sin pasar por el gateway y por ello el graph de kiali nos aparece sin comunicación con el `gateway` creado anteriormente
+
+![kiali](images/kiali_graph_no_net_gw.png)
+
+Ahora vamos a generar el trafico desde el GW, para ello ponemos minikube en tunnel
+
+```bash
+minikube tunnel
+```
+
+```bash
+export INGRESS_HOST=$(kubectl get gtw bookinfo-gateway -o jsonpath='{.status.addresses[0].value}' -n bookinfo)
+export INGRESS_PORT=$(kubectl get gtw bookinfo-gateway -o jsonpath='{.spec.listeners[?(@.name=="http")].port}' -n bookinfo)
+export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
+```
+
+```bash
+export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
+```
 # Aplicando configuraciones
 ...
 
