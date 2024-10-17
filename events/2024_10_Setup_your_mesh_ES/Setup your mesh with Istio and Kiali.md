@@ -15,7 +15,10 @@
    - [Instalando una aplicación de ejemplo: Bookinfo](#instalando-una-aplicación-de-demo-bookinfo)
    - [Abrir la aplicación al tráfico exterior](#abrir-la-aplicación-al-tráfico-exterior)
 3. [Aplicando configuraciones](#aplicando-configuraciones)
-4. [Istio Ambient](#aplicando-configuraciones)   
+4. [Istio Ambient](#aplicando-configuraciones)
+   - [Qué es Istio Ambient](#que-es-istio-ambient)
+   - [Instalando Istio Ambient](#instalando-istio-ambient)
+5. [Desinstalando Istio Ambient](#desinstalando-istio)
 
 # Introduccion
 
@@ -143,7 +146,7 @@ istiod-868cc8b7d7-n2gg4                 1/1     Running   0          2m
 ```
 Si necesitamos pasar algun valor de configuración, lo podemos hacer con --set:
 ```bash
-istioctl install --set meshConfig.accessLogFile=/dev/stdout
+istioctl install --set values.meshConfig.enableTracing=true --set values.meshConfig.defaultConfig.tracing.zipkin.address=zipkin.istio-system:9411 --set values.meshConfig.defaultConfig.tracing.sampling=100.0
 ```
 
 Otra forma de configuración sería:
@@ -217,6 +220,7 @@ vim $ISTIO_HOME/samples/addons/kiali.yaml
         root_namespace: istio-system
       tracing:
         enabled: true
+        external_url: "http://localhost:16686/jaeger"
 ```
 
 Aplicamos el yaml:
@@ -242,7 +246,7 @@ Así podemos comprobar que todos los pods están arrancados:
 Ahora vamos a hacer un port-forward del servicio de Kiali para acceder:
 
 ```bash
-kubectl port-forward svc/kiali 20001:20001 -n istio-system
+istioctl dashboard kiali
 ```
 
 Y accedemos al navegador:
@@ -433,5 +437,44 @@ export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
 ...
 
 # Istio Ambient
-...
 
+## Que es Istio Ambient
+
+Istio Ambient es una nueva arquitectura de Istio "sidecarless", donde se reemplaza el uso del sidecar por dos nuevos componentes, que operan en diferentes capas. Actualmente, esta en fase beta. 
+Estos dos componentes se llaman ztunnel (L4) y Waypoint proxy (L7), que viene a ofrecer la misma funcionalidad que un sidecar, pero no se va a desplegar en el pod de la aplicación. 
+
+La idea de Ambient es reducir el overhead de la infraestructura y mejorar el rendimiento. Cuando queremos las funcionalidades básicas de un Service Mesh (Como comunicaciones TLS, políticas de red en capa 4, o observabilidad en capa 4), ztunnel se va a encargar de procesamiento, mejorando el rendimiento. Normalmente, existe un componente por cada nodo del cluster, y el tráfico del pod se va a redirigir a través de ztunnel. 
+
+Si además, necesitamos alguna funcionalidad de capa 7, incluiremos un Waypoint proxy. Actualmente, un Waypoint proxy es un Envoy proxy, el mismo componente empleado en un sidecar, pero que no se despliega uno por cada pod. La recomentación es crear uno por namespace. 
+
+En la siguiente imagen podemos ver la arquitectura de Istio Ambient:
+
+![istio-ambient](images/istio-ambient.png)
+
+## Instalando Istio Ambient
+
+Istio Ambient se instala con un perfil diferente. Es posible actualizar el perfil con el siguiente comando:
+
+```bash
+istioctl upgrade --set profile=ambient
+```
+
+Nos pedirá confirmación para que se instalen los nuevos componentes de Istio. 
+Podemos ver que están en el namespace de Istio: 
+
+```bash
+kubectl get all -n istio-system
+```
+
+Ahora vamos a eliminar las anotaciones de los sidecars para bookinfo: 
+
+
+
+# Desinstalando Istio
+
+Para desinstalar Istio hacemos lo siguiente: 
+
+```bash
+istioctl uninstall -y --purge
+kubectl delete namespace istio-system
+```
