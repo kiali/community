@@ -1,7 +1,7 @@
 import React from "react";
 import Markdown from 'react-markdown'
 
-export const TalkView = (props: {type: string, link: string}) => {   
+export const TalkView = (props: {type: string, link: string, path: string}) => {   
     const [content, setContent] = React.useState<string>("# Hey")
 
     React.useEffect(() => {
@@ -9,8 +9,8 @@ export const TalkView = (props: {type: string, link: string}) => {
             const fetchMarkdown = async () => {
                 // get the data from the api
                 const data = await fetch(props.link);
-                const mark = await data.text()
-                setContent(mark);
+                const mark = await data.text()                
+                setContent(mark.replaceAll('images/', `https://raw.githubusercontent.com/kiali/community/main/${props.path}/images/`));
                 }
             fetchMarkdown() 
             

@@ -67,7 +67,7 @@ const Talk = () => {
                         </Button>
                         <Collapse in={openPreview}>
                             <div>
-                            <TalkView type={talk.presentation.type} link={talk.presentation.link}/> 
+                            <TalkView type={talk.presentation.type} link={talk.presentation.link} path={talk.path}/> 
                             </div>   
                         </Collapse>
                          </Card.Body>

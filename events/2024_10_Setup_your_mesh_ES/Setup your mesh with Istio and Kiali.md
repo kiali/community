@@ -92,16 +92,19 @@ Que necesitamos descargar:
 - Descargamos un [hipervisor](https://minikube.sigs.k8s.io/docs/start/?arch=%2Flinux%2Fx86-64%2Fstable%2Fbinary+download#install-a-hypervisor) para minikube. Se puede usar Docker, podman, VistualBox...
 
 Si no estamos usando el driver por defecto de minikube, lo podemos configurar así:
-
-`minikube config set driver kvm2`
+```bash
+minikube config set driver kvm2
+```
 
 Arrancamos minikube con este comando:
-
-`minikube start`
-
+```bash
+minikube start
+```
 Si los recursos por defecto no fueran suficientes, podemos arrancarlo con el siguiente comando:
 
-`minikube start --memory=16384 --cpus=4`
+```bash
+minikube start --memory=16384 --cpus=4
+```
 
 ## Instando Istio
 
@@ -109,24 +112,39 @@ En esta sección, veremos cómo instalar istio en modo Sidecar.
 Istio se puede instalar de varias formas, en este caso utilizaremos la herramienta de linea de comandos istioctl.
 
 - Descargamos [istio](https://istio.io/latest/docs/setup/additional-setup/download-istio-release/)
-
-`curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.23.2 TARGET_ARCH=x86_64 sh -`
+```bash
+curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.23.2 TARGET_ARCH=x86_64 sh -
+```
 - Vamos a la carpeta descargada:
-
-`cd istio-1.23.2`
+```bash
+cd istio-1.23.2
+export ISTIO_HOME=$(pwd)
+```
 - Añadimos el cliente al path (Linux):
-
-`export PATH=$PWD/bin:$PATH`
+```bash
+export PATH=$PWD/bin:$PATH
+```
 - Creamos el nampesace para istio:
-
-`kubectl create ns istio-system`
+```bash
+kubectl create ns istio-system
+```
 - Instalamos istio con el perfil por defecto:
+```bash
+istioctl install
+```
+ y verificamos que esta todo correctamente:
 
-`istioctl install`
+ ```bash
+istio-1.23.2$ kubectl get pods -n istio-system
+NAME                                    READY   STATUS    RESTARTS   AGE
+istio-ingressgateway-64f9774bdc-wp54t   1/1     Running   0          1m
+istiod-868cc8b7d7-n2gg4                 1/1     Running   0          2m
 
+```
 Si necesitamos pasar algun valor de configuración, lo podemos hacer con --set:
-
-`istioctl install --set meshConfig.accessLogFile=/dev/stdout`
+```bash
+istioctl install --set meshConfig.accessLogFile=/dev/stdout
+```
 
 Otra forma de configuración sería:
 
@@ -139,27 +157,46 @@ spec:
     accessLogFile: /dev/stdout
 EOF
 ```
+```bash
+istioctl install -f my-config.yaml
+```
 
-`istioctl install -f my-config.yaml`
-
-It is possible to list all the different profiles:
-
-`istioctl profile list`
+Es posible listar todos los perfiles con el siguiente comando:
+```bash
+istioctl profile list
+```
 
 Instalaremos tambien los CRDs del Gateway API, que no estan instalados por defecto:
-
-`get crd gateways.gateway.networking.k8s.io &> /dev/null || { kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd?ref=v1.1.0" | kubectl apply -f -; }`
+```bash
+get crd gateways.gateway.networking.k8s.io &> /dev/null || { kubectl kustomize "github.com/kubernetes-sigs/gateway-api/config/crd?ref=v1.1.0" | kubectl apply -f -; }
+```
 
 ## Instando addons
-Kiali requiere Prometheus para funcionar correctamente, por lo que lo instalaremos de la siguiente forma:
 
-`kubectl apply -f ${ISTIO_HOME}/samples/addons/prometheus.yaml`
+Kiali requiere Prometheus para funcionar correctamente, por lo que lo instalaremos de la siguiente forma:
+```bash
+kubectl apply -f ${ISTIO_HOME}/samples/addons/prometheus.yaml
+```
 
 Grafana y Jaeger son opcionales, pero tambien los instalaremos para ver toda la funcionalidad disponible en Kiali:
+```bash
+kubectl apply -f ${ISTIO_HOME}/samples/addons/grafana.yaml
+```
+```bash
+kubectl apply -f ${ISTIO_HOME}/samples/addons/jaeger.yaml
+```
 
-`kubectl apply -f ${ISTIO_HOME}/samples/addons/grafana.yaml`
+Esperar a que todo este creado correctamente
 
-`kubectl apply -f ${ISTIO_HOME}/samples/addons/jaeger.yaml`
+```bash
+/istio-1.23.2$ kubectl get pods -n istio-system
+NAME                                    READY   STATUS              RESTARTS   AGE
+grafana-7f76bc9cdb-tjnrc                0/1     ContainerCreating   0          14s
+istio-ingressgateway-64f9774bdc-wp54t   1/1     Running             0          101m
+istiod-868cc8b7d7-n2gg4                 1/1     Running             0          102m
+jaeger-66f9675c7b-dshzt                 0/1     ContainerCreating   0          11s
+prometheus-7979bfd58c-ml648             2/2     Running             0          102 
+```
 
 ## Instalando Kiali
 La forma más sencilla de instalar Kiali es applicando el yaml de configuration que viene como un addon de Istio:
@@ -167,7 +204,12 @@ La forma más sencilla de instalar Kiali es applicando el yaml de configuration 
 
 Vamos a hacer algunos cambios en la configuración de Kiali. Vamos a abrir el yaml y cambiar lo siguiente (Haciendo antes una copia de seguridad):
 
+```bash
+cp $ISTIO_HOME/samples/addons/kiali.yaml $ISTIO_HOME/samples/addons/kiali.copy.yaml
+vim ISTIO_HOME/samples/addons/kiali.yaml
 ```
+
+```yaml
     external_services:
       custom_dashboards:
         enabled: true
@@ -179,7 +221,9 @@ Vamos a hacer algunos cambios en la configuración de Kiali. Vamos a abrir el ya
 
 Aplicamos el yaml:
 
-`kubectl apply -f ${ISTIO_HOME}/samples/addons/kiali.yaml`
+```bash
+kubectl apply -f ${ISTIO_HOME}/samples/addons/kiali.yaml
+```
 
 Esta no es la forma recomendada para instalar en entornos de producción, pero si para testing o como una forma rápida de instalar y probar.
 
@@ -187,7 +231,9 @@ Esta no es la forma recomendada para instalar en entornos de producción, pero s
 Vamos a comprobar que tengamos todo instalado.
 Vamos a listar los despliegues, pods y servicios que tenemos en el namespace de istio (istio-system):
 
-`kubectl get all -n istio-system`
+```bash
+kubectl get all -n istio-system
+```
 
 Así podemos comprobar que todos los pods están arrancados:
 
@@ -195,11 +241,14 @@ Así podemos comprobar que todos los pods están arrancados:
 
 Ahora vamos a hacer un port-forward del servicio de Kiali para acceder:
 
-`kubectl port-forward svc/kiali 20001:20001 -n istio-system`
+```bash
+kubectl port-forward svc/kiali 20001:20001 -n istio-system
+```
 
 Y accedemos al navegador:
 
-http://localhost:20001/
+[http://localhost:20001/](http://localhost:20001/)
+
 
 ![kiali](images/kiali.png)
 
@@ -222,15 +271,37 @@ Hay 3 versiones del servicio de reviews:
 
 Vamos a desplegar la aplicación de bookinfo. Primero crearemos un namespace:
 
-`kubectl create ns bookinfo`
+```bash
+kubectl create ns bookinfo
+```
 
 Una vez creado, vamos a desplegar la aplicación en este espacio de nombres:
 
-`kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.23/samples/bookinfo/platform/kube/bookinfo.yaml -n bookinfo`
+```bash
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.23/samples/bookinfo/platform/kube/bookinfo.yaml -n bookinfo
+```
 
+Comprobar qeu tenemos todos los containers corriendo:
+
+```bash
+istio-1.23.2$ kubectl get pods -n bookinfo
+NAME                             READY   STATUS    RESTARTS   AGE
+details-v1-65cfcf56f9-t97c4      1/1     Running   0          66s
+productpage-v1-d5789fdfb-5cc8r   1/1     Running   0          65s
+ratings-v1-7c9bd4b87f-zrjr2      1/1     Running   0          65s
+reviews-v1-6584ddcf65-pk4mm      1/1     Running   0          65s
+reviews-v2-6f85cb9b7c-zzdtt      1/1     Running   0          65s
+reviews-v3-6f5b775685-mkg7k      1/1     Running   0          65s
+```
 Vamos a probar que funciona enviando tráfico:
 
-`kubectl exec "$(kubectl get pod -l app=ratings -n bookinfo -o jsonpath='{.items[0].metadata.name}')" -c ratings -n bookinfo -- curl -sS productpage:9080/productpage | grep -o "<title>.*</title>"`
+```bash
+kubectl exec "$(kubectl get pod -l app=ratings -n bookinfo -o jsonpath='{.items[0].metadata.name}')" -c ratings -n bookinfo -- curl -sS productpage:9080/productpage | grep -o "<title>.*</title>"
+```
+
+El resultado debería ser
+
+`<title>Simple Bookstore App</title`
 
 Vamos que aparece el nuevo namespace en Kiali, podemos ver sus workloads, pero no hay ningún gráfico de tráfico, y vemos que Kiali nos está diciendo que a los workloads les faltan los sidecars:
 
@@ -243,22 +314,31 @@ Lo podemos hacer desde Kiali, de forma tan sencilla como pulsando en el botón "
 
 Esto es equivalente a añadir el label de injection de Istio en el namespace:
 
-`kubectl label namespace bookinfo istio-injection=enabled`
+```bash
+kubectl label namespace bookinfo istio-injection=enabled
+```
 
 Para que tenga efecto, en necesario reiniciar los pods:
 
-`kubectl rollout restart deployment -n bookinfo`
+```bash
+kubectl rollout restart deployment -n bookinfo
+```
 
 Podemos ver en Kiali que ya no se muestra el mensaje de missing sidecars.
 
 Tambien, desde línea de comandos, si listamos los pods de bookinfo, ahora hay dos contenedores por cada pod:
 
-`kubectl get pods -n bookinfo`
+```bash
+kubectl get pods -n bookinfo
+```
 
 ![kiali](images/bookinfo-pods.png)
 
 Volvamos a enviar tráfico:
-`kubectl exec "$(kubectl get pod -l app=ratings -n bookinfo -o jsonpath='{.items[0].metadata.name}')" -c ratings -n bookinfo -- curl -sS productpage:9080/productpage | grep -o "<title>.*</title>"`
+
+```bash
+kubectl exec "$(kubectl get pod -l app=ratings -n bookinfo -o jsonpath='{.items[0].metadata.name}')" -c ratings -n bookinfo -- curl -sS productpage:9080/productpage | grep -o "<title>.*</title>"
+```
 
 Con varias peticiones, vemos el Gráfico del Tráfico algo similar a esto:
 
@@ -275,23 +355,31 @@ El color de la flecha, nos muestra cual es el protocolo de la comunicación, y t
 
 Vamos a hacer la aplicación accesible desde fuera de la Mesh. Para ello, crearemos un ingress gateway, que se encarga de mapear un path a una ruta desde la entrada de la Mesh. 
 
-`kubectl apply -f samples/bookinfo/gateway-api/bookinfo-gateway.yaml -n bookinfo`
+```bash
+kubectl apply -f samples/bookinfo/gateway-api/bookinfo-gateway.yaml -n bookinfo
+```
 
 Vamos a cambiar el valor por defecto del tipo de Gateway, el cual se crea como un LoadBalancer, a ClusterIP: 
 
-`kubectl annotate gateway bookinfo-gateway networking.istio.io/service-type=ClusterIP --namespace=bookinfo`
+```bash
+kubectl annotate gateway bookinfo-gateway networking.istio.io/service-type=ClusterIP --namespace=bookinfo
+```
 
 Y podemos ver el estado del gateway: 
 
-`kubectl get gateway -n bookinfo`
+```bash
+kubectl get gateway -n bookinfo
+```
 
 Ahora podemos conectarnos al servicio de productpage a través de este gateway: 
 
-`kubectl port-forward svc/bookinfo-gateway-istio -n bookinfo 8080:80`
+```bash
+kubectl port-forward svc/bookinfo-gateway-istio -n bookinfo 8080:80
+```
 
 Accediendo desde el navegador: 
 
-`http://localhost:8080/productpage`
+[http://localhost:8080/productpage](http://localhost:8080/productpage)
 
 ![kiali](images/productpage.png)
 
