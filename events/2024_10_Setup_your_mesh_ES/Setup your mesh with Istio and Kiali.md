@@ -15,7 +15,10 @@
    - [Instalando una aplicación de ejemplo: Bookinfo](#instalando-una-aplicación-de-demo-bookinfo)
    - [Abrir la aplicación al tráfico exterior](#abrir-la-aplicación-al-tráfico-exterior)
 3. [Aplicando configuraciones](#aplicando-configuraciones)
-4. [Istio Ambient](#aplicando-configuraciones)   
+4. [Istio Ambient](#aplicando-configuraciones)
+   - [Qué es Istio Ambient](#que-es-istio-ambient)
+   - [Instalando Istio Ambient](#instalando-istio-ambient)
+5. [Desinstalando Istio Ambient](#desinstalando-istio)
 
 # Introduccion
 
