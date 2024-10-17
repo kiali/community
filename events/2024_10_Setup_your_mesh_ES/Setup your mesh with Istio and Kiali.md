@@ -131,10 +131,15 @@ export PATH=$PWD/bin:$PATH
 ```bash
 kubectl create ns istio-system
 ```
-- Instalamos istio con el perfil por defecto:
+- Para instalar istio con el perfil por defecto:
 ```bash
 istioctl install
 ```
+para este taller necesitamos pasar algunos valores en la configuración, lo podemos hacer con --set:
+```bash
+istioctl install --set values.meshConfig.enableTracing=true --set values.meshConfig.defaultConfig.tracing.zipkin.address=zipkin.istio-system:9411 --set values.meshConfig.defaultConfig.tracing.sampling=100.0
+```
+
  y verificamos que esta todo correctamente:
 
  ```bash
@@ -143,10 +148,6 @@ NAME                                    READY   STATUS    RESTARTS   AGE
 istio-ingressgateway-64f9774bdc-wp54t   1/1     Running   0          1m
 istiod-868cc8b7d7-n2gg4                 1/1     Running   0          2m
 
-```
-Si necesitamos pasar algun valor de configuración, lo podemos hacer con --set:
-```bash
-istioctl install --set values.meshConfig.enableTracing=true --set values.meshConfig.defaultConfig.tracing.zipkin.address=zipkin.istio-system:9411 --set values.meshConfig.defaultConfig.tracing.sampling=100.0
 ```
 
 Otra forma de configuración sería:
@@ -278,12 +279,6 @@ Vamos a desplegar la aplicación de bookinfo. Primero crearemos un namespace:
 ```bash
 kubectl create ns bookinfo
 ```
-
-Vamos a utilizar `GATEWAY API`vamos a asegurarnos estan todos los CRDs instalados con:
-
-```bash
-kubectl get crd gateways.gateway.networking.k8s.io &> /dev/null || \
-  { kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.1.0/standard-install.yaml; }
 
 ```
 Una vez creado, vamos a desplegar la aplicación en este espacio de nombres:
