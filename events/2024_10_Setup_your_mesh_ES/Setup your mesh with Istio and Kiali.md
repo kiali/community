@@ -133,11 +133,8 @@ export PATH=$PWD/bin:$PATH
 ```bash
 kubectl create ns istio-system
 ```
-- Para instalar istio con el perfil por defecto:
-```bash
-istioctl install
-```
-para este taller necesitamos pasar algunos valores en la configuración, lo podemos hacer con --set:
+- Para instalar Istio utilizaremos "istioctl install". Los valores de configuración para la instalación se pasan con --set. Para este taller utilizaremos lo siguientes:
+
 ```bash
 istioctl install --set values.meshConfig.enableTracing=true --set values.meshConfig.defaultConfig.tracing.zipkin.address=zipkin.istio-system:9411 --set values.meshConfig.defaultConfig.tracing.sampling=100.0
 ```
