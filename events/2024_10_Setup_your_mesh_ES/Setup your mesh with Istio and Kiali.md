@@ -275,7 +275,7 @@ Consta de los siguientes microservicios:
 
 Hay 3 versiones del servicio de reviews:
 * v1: No llama a ratings.
-* v2: Llama a ratings, y visualiza cada puntuación con estrellas negras del 1 al 5.kubectl apply -f samples/bookinfo/gateway-api/bookinfo-gateway.yaml -n bookinfo
+* v2: Llama a ratings, y visualiza cada puntuación con estrellas negras del 1 al 5.
 * v3: Llama a ratings, y visualiza cada puntuación con estrellas rojas del 1 al 5.
 
 Vamos a desplegar la aplicación de bookinfo. Primero crearemos un namespace:
@@ -284,14 +284,13 @@ Vamos a desplegar la aplicación de bookinfo. Primero crearemos un namespace:
 kubectl create ns bookinfo
 ```
 
-```
 Una vez creado, vamos a desplegar la aplicación en este espacio de nombres:
 
 ```bash
 kubectl apply -f $ISTIO_HOME/samples/bookinfo/platform/kube/bookinfo.yaml -n bookinfo
 ```
 
-Comprobar qeu tenemos todos los containers corriendo:
+Comprobar que tenemos todos los containers corriendo:
 
 ```bash
 istio-1.23.2$ kubectl get pods -n bookinfo
@@ -422,7 +421,6 @@ Y obtener información de cada una de ellas
 Vamos a forzar al un usuario a que vaya a una version determinada. Aplicar este fichero [end-user-sample.yaml](https://raw.githubusercontent.com/kiali/community/refs/heads/main/events/2024_10_Setup_your_mesh_ES/config/end-user-sample.yaml )
 
 ```bash
-
 kubectl apply -f https://raw.githubusercontent.com/kiali/community/refs/heads/main/events/2024_10_Setup_your_mesh_ES/config/end-user-sample.yaml -n bookinfo
 ```
 
