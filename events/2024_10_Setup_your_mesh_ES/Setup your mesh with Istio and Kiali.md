@@ -475,6 +475,13 @@ Vamos a Kiali y a "Traffic Graph". Podemos aumentar el tiempo por si no hemos he
 
 ![ztunnel-graph](images/ztunnel-graph.png)
 
+A diferencia de un gráfico con sidecars, vemos las flechas, que en este caso son azules en lugar de verdes. Esto significa que las conexion que se muestran son tráfico TCP. ¿Y esto porqué? Aunque en realidad son conextiones HTTP, el ztunnel sólo establece un análisis de capa 4, es por esto que no sabe identificar la información de capa 7. En futuras versiones (Kiali 2.0) se incluirá un selector de tráfico de Ambient para saber cual es el reporter desde donde se emitieron los datos de la telemetría y así tener en cuenta esta situación.
+
+![kiali-traffic-selector](images/kiali-traffic-selector.png)
+
+## Añadiendo un Waypoint proxy
+...
+
 # Desinstalando Istio
 
 Para desinstalar Istio hacemos lo siguiente: 
