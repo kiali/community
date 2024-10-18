@@ -18,6 +18,8 @@
 4. [Istio Ambient](#aplicando-configuraciones)
    - [Qué es Istio Ambient](#que-es-istio-ambient)
    - [Instalando Istio Ambient](#instalando-istio-ambient)
+   - [Añadiendo Bookinfo a Ambient Mesh](#añadiendo-bookinfo-a-ambient-mesh)
+   - [Añadiendo un Waypoint proxy](#añadiendo-un-waypoint-proxy)
 5. [Desinstalando Istio Ambient](#desinstalando-istio)
 
 # Introduccion
