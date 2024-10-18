@@ -18,6 +18,8 @@
 4. [Istio Ambient](#aplicando-configuraciones)
    - [Qué es Istio Ambient](#que-es-istio-ambient)
    - [Instalando Istio Ambient](#instalando-istio-ambient)
+   - [Añadiendo Bookinfo a Ambient Mesh](#añadiendo-bookinfo-a-ambient-mesh)
+   - [Añadiendo un Waypoint proxy](#añadiendo-un-waypoint-proxy)
 5. [Desinstalando Istio Ambient](#desinstalando-istio)
 
 # Introduccion
@@ -148,6 +150,11 @@ NAME                                    READY   STATUS    RESTARTS   AGE
 istio-ingressgateway-64f9774bdc-wp54t   1/1     Running   0          1m
 istiod-868cc8b7d7-n2gg4                 1/1     Running   0          2m
 
+```
+
+Si necesitamos pasar algun valor de configuración, lo podemos hacer con --set:
+```bash
+istioctl install --set values.meshConfig.enableTracing=true --set values.meshConfig.defaultConfig.tracing.zipkin.address=zipkin.istio-system:9411 --set values.meshConfig.defaultConfig.tracing.sampling=100.0
 ```
 
 Otra forma de configuración sería:
@@ -525,9 +532,96 @@ Podemos ver que están en el namespace de Istio:
 kubectl get all -n istio-system
 ```
 
+![ambient-pods](images/ambient-pods.png)
+
+## Añadiendo bookinfo a Ambient Mesh
+
+Las anotaciones para incluir un namespace en una Mesh con Ambient son diferentes a las de los sidecars. De esta forma, en una Mesh de Ambient pueden cohexistir namespaces con sidecars y con Ambient. 
 Ahora vamos a eliminar las anotaciones de los sidecars para bookinfo: 
 
+```bash
+kubectl label ns bookinfo istio-injection-
+```
 
+Esto tambien se puede hacer desde Kiali: 
+
+![eliminar-auto-inyeccion](images/eliminar-auto-inyeccion.png)
+
+Y reiniciamos: 
+
+```bash
+kubectl rollout restart deployment -n bookinfo
+```
+
+Vemos que ahora los pods solo tienen un contenedor: 
+
+![bookinfo-pods-no-proxy](images/bookinfo-pods-no-proxy.png)
+
+Y aparecen fuera de la Mesh: 
+
+![out-of-mesh](images/out-of-mesh.png)
+
+Vamos a añadirlos ahora a Ambient Mesh. Lo hacemos mediante anotaciones: 
+
+```bash
+kubectl label namespace bookinfo istio.io/dataplane-mode=ambient
+```
+
+Vamos a ver que nuestro namespace tiene un label indicando que está incluido en Ambient: 
+
+![ambient-ns](images/ambient-ns.png)
+
+En la lista de workloads ya no no ve ningún mensaje indicando que están fuera de la Mesh. 
+Si vamos al detalle de un workload, podemos ver el label de Ambient, y en el tooltip que aparece cuando hacemos hover, se muestra más información: 
+
+![ambient-wk-detail](images/ambient-wk-detail.png)
+
+Vamos a enviar tráfico a través del gateway, a ver como se ve el gráfico de tráfico: 
+
+```bash
+kubectl exec "$(kubectl get pod -l app=ratings -n bookinfo -o jsonpath='{.items[0].metadata.name}')" -c ratings -n bookinfo -- curl -sS productpage:9080/productpage | grep -o "<title>.*</title>"
+```
+
+Vamos a Kiali y a "Traffic Graph". Podemos aumentar el tiempo por si no hemos hecho muchas peticiones. Y esto es lo que vemos: 
+
+![ztunnel-graph](images/ztunnel-graph.png)
+
+A diferencia de un gráfico con sidecars, vemos las flechas, que en este caso son azules en lugar de verdes. Esto significa que las conexion que se muestran son tráfico TCP. ¿Y esto porqué? Aunque en realidad son conextiones HTTP, el ztunnel sólo establece un análisis de capa 4, es por esto que no sabe identificar la información de capa 7. En futuras versiones (Kiali 2.0) se incluirá un selector de tráfico de Ambient para saber cual es el reporter desde donde se emitieron los datos de la telemetría y así tener en cuenta esta situación.
+
+![kiali-traffic-selector](images/kiali-traffic-selector.png)
+
+Como podemos ver, seleccionando en el menú Display "security", que el tráfico está encriptado: 
+
+![kiali-traffic-selector](images/trafico-encriptado.png)
+
+
+## Añadiendo un Waypoint proxy
+Vamos a incluir un procesamiento de capa 7 adicional con un waypoint proxy. Crearemos uno para todo el namespace: 
+
+```bash
+istioctl waypoint apply -n bookinfo --enroll-namespace
+```
+
+Vemos que se ha creado un nuevo workload en Kiali, identificado como Waypoint proxy: 
+
+![waypoint-proxy](images/waypoint-proxy.png)
+
+Si vamos al detalle de una de nuestras aplicaciones, podemos ver que se ha añadido el label L7 cuando se abre el tooltip de Ambient: 
+
+![waypoint-proxy-detail-app](images/waypoint-proxy-detail-app.png)
+
+Vamos al gráfico y vemos que se ven conexiones http: 
+
+![waypoint-proxy-detail-app](images/waypoint-graph.png)
+
+En esta versión todavía vemos dobles flechas, en la versión 2.0 de Kiali se incluyen mejoras respecto al gráfico de Ambient donde se ve una versión más simplificada. 
+
+En el menú Display también podemos seleccionar la opción "waypoint proxy" para visualizar los nodos waypoint en el gráfico: 
+
+![waypoint-proxy-detail-app](images/waypoint-proxy-nodes.png)
+
+En esta versión, esta opción es todavía experimental, vemos que faltan algunas flechas (Todo el tráfico pasa por Ambient). Estas mejoras se incluyen en la versión 2.0 de Kiali. 
+Esto se debe a que todavía no se realizó una adaptación de la telemetría de Ambient en el código actual, puesto que Waypoint reporta la telemetría de una forma un poco diferente a lo que lo hace Envoy. 
 
 # Desinstalando Istio
 
