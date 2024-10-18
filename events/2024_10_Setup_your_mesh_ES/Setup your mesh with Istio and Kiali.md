@@ -421,9 +421,59 @@ Podemos ver que están en el namespace de Istio:
 kubectl get all -n istio-system
 ```
 
+![ambient-pods](images/ambient-pods.png)
+
+## Añadiendo bookinfo a Ambient Mesh
+
+Las anotaciones para incluir un namespace en una Mesh con Ambient son diferentes a las de los sidecars. De esta forma, en una Mesh de Ambient pueden cohexistir namespaces con sidecars y con Ambient. 
 Ahora vamos a eliminar las anotaciones de los sidecars para bookinfo: 
 
+```bash
+kubectl label ns bookinfo istio-injection-
+```
 
+Esto tambien se puede hacer desde Kiali: 
+
+![eliminar-auto-inyeccion](images/eliminar-auto-inyeccion.png)
+
+Y reiniciamos: 
+
+```bash
+kubectl rollout restart deployment -n bookinfo
+```
+
+Vemos que ahora los pods solo tienen un contenedor: 
+
+![bookinfo-pods-no-proxy](images/bookinfo-pods-no-proxy.png)
+
+Y aparecen fuera de la Mesh: 
+
+![out-of-mesh](images/out-of-mesh.png)
+
+Vamos a añadirlos ahora a Ambient Mesh. Lo hacemos mediante anotaciones: 
+
+```bash
+kubectl label namespace bookinfo istio.io/dataplane-mode=ambient
+```
+
+Vamos a ver que nuestro namespace tiene un label indicando que está incluido en Ambient: 
+
+![ambient-ns](images/ambient-ns.png)
+
+En la lista de workloads ya no no ve ningún mensaje indicando que están fuera de la Mesh. 
+Si vamos al detalle de un workload, podemos ver el label de Ambient, y en el tooltip que aparece cuando hacemos hover, se muestra más información: 
+
+![ambient-wk-detail](images/ambient-wk-detail.png)
+
+Vamos a enviar tráfico a través del gateway, a ver como se ve el gráfico de tráfico: 
+
+```bash
+kubectl exec "$(kubectl get pod -l app=ratings -n bookinfo -o jsonpath='{.items[0].metadata.name}')" -c ratings -n bookinfo -- curl -sS productpage:9080/productpage | grep -o "<title>.*</title>"
+```
+
+Vamos a Kiali y a "Traffic Graph". Podemos aumentar el tiempo por si no hemos hecho muchas peticiones. Y esto es lo que vemos: 
+
+![ztunnel-graph](images/ztunnel-graph.png)
 
 # Desinstalando Istio
 
