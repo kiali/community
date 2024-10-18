@@ -133,10 +133,15 @@ export PATH=$PWD/bin:$PATH
 ```bash
 kubectl create ns istio-system
 ```
-- Instalamos istio con el perfil por defecto:
+- Para instalar istio con el perfil por defecto:
 ```bash
 istioctl install
 ```
+para este taller necesitamos pasar algunos valores en la configuración, lo podemos hacer con --set:
+```bash
+istioctl install --set values.meshConfig.enableTracing=true --set values.meshConfig.defaultConfig.tracing.zipkin.address=zipkin.istio-system:9411 --set values.meshConfig.defaultConfig.tracing.sampling=100.0
+```
+
  y verificamos que esta todo correctamente:
 
  ```bash
@@ -146,6 +151,7 @@ istio-ingressgateway-64f9774bdc-wp54t   1/1     Running   0          1m
 istiod-868cc8b7d7-n2gg4                 1/1     Running   0          2m
 
 ```
+
 Si necesitamos pasar algun valor de configuración, lo podemos hacer con --set:
 ```bash
 istioctl install --set values.meshConfig.enableTracing=true --set values.meshConfig.defaultConfig.tracing.zipkin.address=zipkin.istio-system:9411 --set values.meshConfig.defaultConfig.tracing.sampling=100.0
@@ -211,7 +217,7 @@ Vamos a hacer algunos cambios en la configuración de Kiali. Vamos a abrir el ya
 
 ```bash
 cp $ISTIO_HOME/samples/addons/kiali.yaml $ISTIO_HOME/samples/addons/kiali.copy.yaml
-vim ISTIO_HOME/samples/addons/kiali.yaml
+vim $ISTIO_HOME/samples/addons/kiali.yaml
 ```
 
 ```yaml
@@ -272,7 +278,7 @@ Consta de los siguientes microservicios:
 
 Hay 3 versiones del servicio de reviews:
 * v1: No llama a ratings.
-* v2: Llama a ratings, y visualiza cada puntuación con estrellas negras del 1 al 5.
+* v2: Llama a ratings, y visualiza cada puntuación con estrellas negras del 1 al 5.kubectl apply -f samples/bookinfo/gateway-api/bookinfo-gateway.yaml -n bookinfo
 * v3: Llama a ratings, y visualiza cada puntuación con estrellas rojas del 1 al 5.
 
 Vamos a desplegar la aplicación de bookinfo. Primero crearemos un namespace:
@@ -281,10 +287,11 @@ Vamos a desplegar la aplicación de bookinfo. Primero crearemos un namespace:
 kubectl create ns bookinfo
 ```
 
+```
 Una vez creado, vamos a desplegar la aplicación en este espacio de nombres:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.23/samples/bookinfo/platform/kube/bookinfo.yaml -n bookinfo
+kubectl apply -f $ISTIO_HOME/samples/bookinfo/platform/kube/bookinfo.yaml -n bookinfo
 ```
 
 Comprobar qeu tenemos todos los containers corriendo:
@@ -362,7 +369,7 @@ El color de la flecha, nos muestra cual es el protocolo de la comunicación, y t
 Vamos a hacer la aplicación accesible desde fuera de la Mesh. Para ello, crearemos un ingress gateway, que se encarga de mapear un path a una ruta desde la entrada de la Mesh. 
 
 ```bash
-kubectl apply -f samples/bookinfo/gateway-api/bookinfo-gateway.yaml -n bookinfo
+kubectl apply -f $ISTIO_HOME/samples/bookinfo/gateway-api/bookinfo-gateway.yaml -n bookinfo
 ```
 
 Vamos a cambiar el valor por defecto del tipo de Gateway, el cual se crea como un LoadBalancer, a ClusterIP: 
@@ -389,9 +396,111 @@ Accediendo desde el navegador:
 
 ![kiali](images/productpage.png)
 
+Vamos a mantener un generador de trafico en una terminal
+
+```bash
+while :; do curl -sS http://localhost:8080/productpage | grep -o "<title>.*</title>"; sleep 3; done > /dev/null
+
+```
+
+## Tracing
+
+Abrimos la consola de jaeger
+
+```bash
+istioctl dashboard jaeger
+```
+
+Podremos ver todas las peticiones que estan entrando a nuestra aplicación
+![jaeger](images/jaeger_general.png)
+
+Y obtener información de cada una de ellas
+![jaeger](images/jaeger_trace.png)
+
 
 # Aplicando configuraciones
-...
+
+## Caso de uso con header `end-user`
+
+Vamos a forzar al un usuario a que vaya a una version determinada. Aplicar este fichero [end-user-sample.yaml](https://raw.githubusercontent.com/kiali/community/refs/heads/main/events/2024_10_Setup_your_mesh_ES/config/end-user-sample.yaml )
+
+```bash
+
+kubectl apply -f https://raw.githubusercontent.com/kiali/community/refs/heads/main/events/2024_10_Setup_your_mesh_ES/config/end-user-sample.yaml -n bookinfo
+```
+
+¿Que ha pasado?
+
+```yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: reviews
+spec:
+  hosts:
+    - reviews
+  http:
+  - match:
+    - headers:
+        end-user:
+          exact: biznagafest
+    route:
+    - destination:
+        host: reviews
+        subset: v2
+  - route:
+    - destination:
+        host: reviews
+        subset: v1
+
+```
+
+Ahora el usuario de `biznagafest` solo puede acceder a la version v2 mientras que el resto va a la version 1.
+
+¿Que muestra kiali si eliminamos el `DestinationRule` ?
+
+Vamos a por otro ejemplo, vamos aplicar ahora [end-user-abort.yaml](https://raw.githubusercontent.com/kiali/community/refs/heads/main/events/2024_10_Setup_your_mesh_ES/config/end-user-abort.yaml )
+
+```bash
+
+kubectl apply -f https://raw.githubusercontent.com/kiali/community/refs/heads/main/events/2024_10_Setup_your_mesh_ES/config/end-user-abort.yaml -n bookinfo
+```
+
+¿Que ha pasado?
+
+```yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ratings
+spec:
+  hosts:
+  - ratings
+  http:
+  - match:
+    - headers:
+        end-user:
+          exact: jason
+    fault:
+      abort:
+        percentage:
+          value: 100.0
+        httpStatus: 500
+    route:
+    - destination:
+        host: ratings
+        subset: v1
+  - route:
+    - destination:
+        host: ratings
+        subset: v1
+```
+
+Vamos a resolverlo
+
+Vamos a ver los wizards de Kiali y como lo hariamos.
+
+Más ejemplos. Balanceado de carga de una versión a otra.
 
 # Istio Ambient
 
