@@ -481,8 +481,38 @@ A diferencia de un gráfico con sidecars, vemos las flechas, que en este caso so
 
 ![kiali-traffic-selector](images/kiali-traffic-selector.png)
 
+Como podemos ver, seleccionando en el menú Display "security", que el tráfico está encriptado: 
+
+![kiali-traffic-selector](images/trafico-encriptado.png)
+
+
 ## Añadiendo un Waypoint proxy
-...
+Vamos a incluir un procesamiento de capa 7 adicional con un waypoint proxy. Crearemos uno para todo el namespace: 
+
+```bash
+istioctl waypoint apply -n bookinfo --enroll-namespace
+```
+
+Vemos que se ha creado un nuevo workload en Kiali, identificado como Waypoint proxy: 
+
+![waypoint-proxy](images/waypoint-proxy.png)
+
+Si vamos al detalle de una de nuestras aplicaciones, podemos ver que se ha añadido el label L7 cuando se abre el tooltip de Ambient: 
+
+![waypoint-proxy-detail-app](images/waypoint-proxy-detail-app.png)
+
+Vamos al gráfico y vemos que se ven conexiones http: 
+
+![waypoint-proxy-detail-app](images/waypoint-graph.png)
+
+En esta versión todavía vemos dobles flechas, en la versión 2.0 de Kiali se incluyen mejoras respecto al gráfico de Ambient donde se ve una versión más simplificada. 
+
+En el menú Display también podemos seleccionar la opción "waypoint proxy" para visualizar los nodos waypoint en el gráfico: 
+
+![waypoint-proxy-detail-app](images/waypoint-proxy-nodes.png)
+
+En esta versión, esta opción es todavía experimental, vemos que faltan algunas flechas (Todo el tráfico pasa por Ambient). Estas mejoras se incluyen en la versión 2.0 de Kiali. 
+Esto se debe a que todavía no se realizó una adaptación de la telemetría de Ambient en el código actual, puesto que Waypoint reporta la telemetría de una forma un poco diferente a lo que lo hace Envoy. 
 
 # Desinstalando Istio
 
