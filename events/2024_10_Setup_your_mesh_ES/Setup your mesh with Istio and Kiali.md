@@ -404,32 +404,96 @@ Abrimos la consola de jaeger
 istioctl dashboard jaeger
 ```
 
-Como podemos observar no nos apareceran trazas relacionadas con `bookinfo`
+Podremos ver todas las peticiones que estan entrando a nuestra aplicación
+![jaeger](images/jaeger_general.png)
 
-![jaeger](images/jaeger_no_traces.png)
+Y obtener información de cada una de ellas
+![jaeger](images/jaeger_trace.png)
 
 
-Esto es debido a que la comunicación se esta haciendo directamente sin pasar por el gateway y por ello el graph de kiali nos aparece sin comunicación con el `gateway` creado anteriormente
-
-![kiali](images/kiali_graph_no_net_gw.png)
-
-Ahora vamos a generar el trafico desde el GW, para ello ponemos minikube en tunnel
-
-```bash
-minikube tunnel
-```
-
-```bash
-export INGRESS_HOST=$(kubectl get gtw bookinfo-gateway -o jsonpath='{.status.addresses[0].value}' -n bookinfo)
-export INGRESS_PORT=$(kubectl get gtw bookinfo-gateway -o jsonpath='{.spec.listeners[?(@.name=="http")].port}' -n bookinfo)
-export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
-```
-
-```bash
-export GATEWAY_URL=$INGRESS_HOST:$INGRESS_PORT
-```
 # Aplicando configuraciones
-...
+
+## Caso de uso con header `end-user`
+
+Vamos a forzar al un usuario a que vaya a una version determinada. Aplicar este fichero [end-user-sample.yaml](https://raw.githubusercontent.com/kiali/community/refs/heads/main/events/2024_10_Setup_your_mesh_ES/config/end-user-sample.yaml )
+
+```bash
+
+kubectl apply -f https://raw.githubusercontent.com/kiali/community/refs/heads/main/events/2024_10_Setup_your_mesh_ES/config/end-user-sample.yaml -n bookinfo
+```
+
+¿Que ha pasado?
+
+```yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: reviews
+spec:
+  hosts:
+    - reviews
+  http:
+  - match:
+    - headers:
+        end-user:
+          exact: biznagafest
+    route:
+    - destination:
+        host: reviews
+        subset: v2
+  - route:
+    - destination:
+        host: reviews
+        subset: v1
+
+```
+
+Ahora el usuario de `biznagafest` solo puede acceder a la version v2 mientras que el resto va a la version 1.
+
+¿Que muestra kiali si eliminamos el `DestinationRule` ?
+
+Vamos a por otro ejemplo, vamos aplicar ahora [end-user-abort.yaml](https://raw.githubusercontent.com/kiali/community/refs/heads/main/events/2024_10_Setup_your_mesh_ES/config/end-user-abort.yaml )
+
+```bash
+
+kubectl apply -f https://raw.githubusercontent.com/kiali/community/refs/heads/main/events/2024_10_Setup_your_mesh_ES/config/end-user-abort.yaml -n bookinfo
+```
+
+¿Que ha pasado?
+
+```yaml
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ratings
+spec:
+  hosts:
+  - ratings
+  http:
+  - match:
+    - headers:
+        end-user:
+          exact: jason
+    fault:
+      abort:
+        percentage:
+          value: 100.0
+        httpStatus: 500
+    route:
+    - destination:
+        host: ratings
+        subset: v1
+  - route:
+    - destination:
+        host: ratings
+        subset: v1
+```
+
+Vamos a resolverlo
+
+Vamos a ver los wizards de Kiali y como lo hariamos.
+
+Más ejemplos. Balanceado de carga de una versión a otra.
 
 # Istio Ambient
 
