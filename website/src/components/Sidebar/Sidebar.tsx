@@ -1,4 +1,4 @@
-import sidebarImage from "../../assets/img/sidebar-3.jpg";
+import sidebarImage from "../../assets/img/sidebar.jpg";
 import logo from "../../assets/img/kiali_icon_darkbkg_1280px.svg";
 import { useLocation, NavLink } from "react-router-dom";
 import { Nav } from "react-bootstrap";
