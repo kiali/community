@@ -293,7 +293,7 @@ kubectl apply -f $ISTIO_HOME/samples/bookinfo/platform/kube/bookinfo.yaml -n boo
 Comprobar que tenemos todos los containers corriendo:
 
 ```bash
-istio-1.23.2$ kubectl get pods -n bookinfo
+istio-1.23.2$ kubectl get pods -n bookinfo --watch
 NAME                             READY   STATUS    RESTARTS   AGE
 details-v1-65cfcf56f9-t97c4      1/1     Running   0          66s
 productpage-v1-d5789fdfb-5cc8r   1/1     Running   0          65s
@@ -398,6 +398,10 @@ Vamos a mantener un generador de trafico en una terminal
 while :; do curl -sS http://localhost:8080/productpage | grep -o "<title>.*</title>"; sleep 3; done > /dev/null
 
 ```
+
+Abrimos Kiali para ver cómo se ve el gráfico ahora: 
+
+![kiali](images/kiali-gateway-graph.png)
 
 ## Tracing
 
