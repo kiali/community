@@ -94,7 +94,7 @@ Que necesitamos descargar:
 
 - Descargamos la herramienta de la linea de comandos de kubernetes [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
 - Descargamos la última version de [minikube](https://kubernetes.io/docs/tasks/tools/#minikube)
-- Descargamos un [hipervisor](https://minikube.sigs.k8s.io/docs/start/?arch=%2Flinux%2Fx86-64%2Fstable%2Fbinary+download#install-a-hypervisor) para minikube. Se puede usar Docker, podman, VistualBox...
+- Descargamos un [hipervisor](https://minikube.sigs.k8s.io/docs/start/?arch=%2Flinux%2Fx86-64%2Fstable%2Fbinary+download#install-a-hypervisor) para minikube. Se puede usar VirtualBox, pero tambien nos sirve una herramienta gestora de contenedores como Docker o Podman.
 
 Si no estamos usando el driver por defecto de minikube, lo podemos configurar así:
 ```bash
