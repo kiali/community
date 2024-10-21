@@ -36,10 +36,16 @@
                     "issues": 141,
                     "stars": 3385,
                     "size": 66643
+                },
+                "2024-10-21": {
+                    "forks": 486,
+                    "issues": 139,
+                    "stars": 3386,
+                    "size": 66660
                 }
             },
             "language": {
-                "TypeScript": 3757434,
+                "TypeScript": 3758853,
                 "Go": 3657703,
                 "Shell": 768659,
                 "Gherkin": 215445,
