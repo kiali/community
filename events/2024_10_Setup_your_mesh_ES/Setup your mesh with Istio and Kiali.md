@@ -4,8 +4,8 @@
 
 1. [Introduccion](#introduccion) 
    - [Porqué un service mesh](#porqué-un-service-mesh)
-   - [Qué es Istio?](#que-es-istio)
-   - [Qué es Kiali?](que-es-kiali)
+   - [¿Qué es Istio?](#que-es-istio)
+   - [¿Qué es Kiali?](que-es-kiali)
 2. [Instalación paso a paso](#instalación-paso-a-paso)
    - [Prerrequisitos](#prerrequisitos)
    - [Instalando Istio](#instando-istio)
@@ -94,9 +94,9 @@ Que necesitamos descargar:
 
 - Descargamos la herramienta de la linea de comandos de kubernetes [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
 - Descargamos la última version de [minikube](https://kubernetes.io/docs/tasks/tools/#minikube)
-- Descargamos un [hipervisor](https://minikube.sigs.k8s.io/docs/start/?arch=%2Flinux%2Fx86-64%2Fstable%2Fbinary+download#install-a-hypervisor) para minikube. Se puede usar Docker, podman, VistualBox...
+- Descargamos un [hipervisor](https://minikube.sigs.k8s.io/docs/start/?arch=%2Flinux%2Fx86-64%2Fstable%2Fbinary+download#install-a-hypervisor) para minikube. Se puede usar VirtualBox, pero tambien nos sirve una herramienta gestora de contenedores como Docker o Podman.
 
-Si no estamos usando el driver por defecto de minikube, lo podemos configurar así:
+Si no queremos utilizar el driver por defecto de minikube, lo podemos configurar así:
 ```bash
 minikube config set driver kvm2
 ```
@@ -129,15 +129,12 @@ export ISTIO_HOME=$(pwd)
 ```bash
 export PATH=$PWD/bin:$PATH
 ```
-- Creamos el nampesace para istio:
+- Creamos el namespace para istio:
 ```bash
 kubectl create ns istio-system
 ```
-- Para instalar istio con el perfil por defecto:
-```bash
-istioctl install
-```
-para este taller necesitamos pasar algunos valores en la configuración, lo podemos hacer con --set:
+- Para instalar Istio utilizaremos "istioctl install". Los valores de configuración para la instalación se pasan con --set. Para este taller utilizaremos lo siguientes:
+
 ```bash
 istioctl install --set values.meshConfig.enableTracing=true --set values.meshConfig.defaultConfig.tracing.zipkin.address=zipkin.istio-system:9411 --set values.meshConfig.defaultConfig.tracing.sampling=100.0
 ```
@@ -150,11 +147,6 @@ NAME                                    READY   STATUS    RESTARTS   AGE
 istio-ingressgateway-64f9774bdc-wp54t   1/1     Running   0          1m
 istiod-868cc8b7d7-n2gg4                 1/1     Running   0          2m
 
-```
-
-Si necesitamos pasar algun valor de configuración, lo podemos hacer con --set:
-```bash
-istioctl install --set values.meshConfig.enableTracing=true --set values.meshConfig.defaultConfig.tracing.zipkin.address=zipkin.istio-system:9411 --set values.meshConfig.defaultConfig.tracing.sampling=100.0
 ```
 
 Otra forma de configuración sería:
@@ -278,7 +270,7 @@ Consta de los siguientes microservicios:
 
 Hay 3 versiones del servicio de reviews:
 * v1: No llama a ratings.
-* v2: Llama a ratings, y visualiza cada puntuación con estrellas negras del 1 al 5.kubectl apply -f samples/bookinfo/gateway-api/bookinfo-gateway.yaml -n bookinfo
+* v2: Llama a ratings, y visualiza cada puntuación con estrellas negras del 1 al 5.
 * v3: Llama a ratings, y visualiza cada puntuación con estrellas rojas del 1 al 5.
 
 Vamos a desplegar la aplicación de bookinfo. Primero crearemos un namespace:
@@ -287,17 +279,16 @@ Vamos a desplegar la aplicación de bookinfo. Primero crearemos un namespace:
 kubectl create ns bookinfo
 ```
 
-```
 Una vez creado, vamos a desplegar la aplicación en este espacio de nombres:
 
 ```bash
 kubectl apply -f $ISTIO_HOME/samples/bookinfo/platform/kube/bookinfo.yaml -n bookinfo
 ```
 
-Comprobar qeu tenemos todos los containers corriendo:
+Comprobar que tenemos todos los containers corriendo:
 
 ```bash
-istio-1.23.2$ kubectl get pods -n bookinfo
+istio-1.23.2$ kubectl get pods -n bookinfo --watch
 NAME                             READY   STATUS    RESTARTS   AGE
 details-v1-65cfcf56f9-t97c4      1/1     Running   0          66s
 productpage-v1-d5789fdfb-5cc8r   1/1     Running   0          65s
@@ -403,6 +394,10 @@ while :; do curl -sS http://localhost:8080/productpage | grep -o "<title>.*</tit
 
 ```
 
+Abrimos Kiali para ver cómo se ve el gráfico ahora: 
+
+![kiali](images/kiali-gateway-graph.png)
+
 ## Tracing
 
 Abrimos la consola de jaeger
@@ -425,7 +420,6 @@ Y obtener información de cada una de ellas
 Vamos a forzar al un usuario a que vaya a una version determinada. Aplicar este fichero [end-user-sample.yaml](https://raw.githubusercontent.com/kiali/community/refs/heads/main/events/2024_10_Setup_your_mesh_ES/config/end-user-sample.yaml )
 
 ```bash
-
 kubectl apply -f https://raw.githubusercontent.com/kiali/community/refs/heads/main/events/2024_10_Setup_your_mesh_ES/config/end-user-sample.yaml -n bookinfo
 ```
 
@@ -525,6 +519,12 @@ Istio Ambient se instala con un perfil diferente. Es posible actualizar el perfi
 istioctl upgrade --set profile=ambient
 ```
 
+Nota: Si queremos instalar Ambient, en lugar de actualizar, se realizaría de la siguiente forma: 
+
+```bash
+istioctl install --set profile=ambient
+```
+
 Nos pedirá confirmación para que se instalen los nuevos componentes de Istio. 
 Podemos ver que están en el namespace de Istio: 
 
@@ -620,8 +620,8 @@ En el menú Display también podemos seleccionar la opción "waypoint proxy" par
 
 ![waypoint-proxy-detail-app](images/waypoint-proxy-nodes.png)
 
-En esta versión, esta opción es todavía experimental, vemos que faltan algunas flechas (Todo el tráfico pasa por Ambient). Estas mejoras se incluyen en la versión 2.0 de Kiali. 
-Esto se debe a que todavía no se realizó una adaptación de la telemetría de Ambient en el código actual, puesto que Waypoint reporta la telemetría de una forma un poco diferente a lo que lo hace Envoy. 
+En esta versión, esta opción es todavía experimental, vemos que faltan algunas flechas (Todo el tráfico pasa por Waypoint). Estas mejoras se incluyen en la versión 2.0 de Kiali. 
+Esto se debe a que todavía no se realizó una adaptación de la telemetría de Ambient en el código actual, puesto que Waypoint reporta la telemetría de una forma un poco diferente a lo que lo hacen los sidecars. 
 
 # Desinstalando Istio
 
