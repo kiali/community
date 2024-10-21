@@ -519,6 +519,12 @@ Istio Ambient se instala con un perfil diferente. Es posible actualizar el perfi
 istioctl upgrade --set profile=ambient
 ```
 
+Nota: Si queremos instalar Ambient, en lugar de actualizar, se realizaría de la siguiente forma: 
+
+```bash
+istioctl install --set profile=ambient
+```
+
 Nos pedirá confirmación para que se instalen los nuevos componentes de Istio. 
 Podemos ver que están en el namespace de Istio: 
 
@@ -614,8 +620,8 @@ En el menú Display también podemos seleccionar la opción "waypoint proxy" par
 
 ![waypoint-proxy-detail-app](images/waypoint-proxy-nodes.png)
 
-En esta versión, esta opción es todavía experimental, vemos que faltan algunas flechas (Todo el tráfico pasa por Ambient). Estas mejoras se incluyen en la versión 2.0 de Kiali. 
-Esto se debe a que todavía no se realizó una adaptación de la telemetría de Ambient en el código actual, puesto que Waypoint reporta la telemetría de una forma un poco diferente a lo que lo hace Envoy. 
+En esta versión, esta opción es todavía experimental, vemos que faltan algunas flechas (Todo el tráfico pasa por Waypoint). Estas mejoras se incluyen en la versión 2.0 de Kiali. 
+Esto se debe a que todavía no se realizó una adaptación de la telemetría de Ambient en el código actual, puesto que Waypoint reporta la telemetría de una forma un poco diferente a lo que lo hacen los sidecars. 
 
 # Desinstalando Istio
 
