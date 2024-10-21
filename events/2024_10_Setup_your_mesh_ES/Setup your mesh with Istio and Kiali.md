@@ -4,8 +4,8 @@
 
 1. [Introduccion](#introduccion) 
    - [Porqué un service mesh](#porqué-un-service-mesh)
-   - [Qué es Istio?](#que-es-istio)
-   - [Qué es Kiali?](que-es-kiali)
+   - [¿Qué es Istio?](#que-es-istio)
+   - [¿Qué es Kiali?](que-es-kiali)
 2. [Instalación paso a paso](#instalación-paso-a-paso)
    - [Prerrequisitos](#prerrequisitos)
    - [Instalando Istio](#instando-istio)
