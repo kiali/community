@@ -96,7 +96,7 @@ Que necesitamos descargar:
 - Descargamos la última version de [minikube](https://kubernetes.io/docs/tasks/tools/#minikube)
 - Descargamos un [hipervisor](https://minikube.sigs.k8s.io/docs/start/?arch=%2Flinux%2Fx86-64%2Fstable%2Fbinary+download#install-a-hypervisor) para minikube. Se puede usar VirtualBox, pero tambien nos sirve una herramienta gestora de contenedores como Docker o Podman.
 
-Si no estamos usando el driver por defecto de minikube, lo podemos configurar así:
+Si no queremos utilizar el driver por defecto de minikube, lo podemos configurar así:
 ```bash
 minikube config set driver kvm2
 ```
@@ -129,7 +129,7 @@ export ISTIO_HOME=$(pwd)
 ```bash
 export PATH=$PWD/bin:$PATH
 ```
-- Creamos el nampesace para istio:
+- Creamos el namespace para istio:
 ```bash
 kubectl create ns istio-system
 ```
@@ -147,11 +147,6 @@ NAME                                    READY   STATUS    RESTARTS   AGE
 istio-ingressgateway-64f9774bdc-wp54t   1/1     Running   0          1m
 istiod-868cc8b7d7-n2gg4                 1/1     Running   0          2m
 
-```
-
-Si necesitamos pasar algun valor de configuración, lo podemos hacer con --set:
-```bash
-istioctl install --set values.meshConfig.enableTracing=true --set values.meshConfig.defaultConfig.tracing.zipkin.address=zipkin.istio-system:9411 --set values.meshConfig.defaultConfig.tracing.sampling=100.0
 ```
 
 Otra forma de configuración sería:
