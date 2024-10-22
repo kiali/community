@@ -1,0 +1,14 @@
+{
+	"date": "2024-03-20",
+	"place": "Paris, France",
+	"eventName": "Kubecon IstioDay EU",
+	"talkName": "Ambient",
+	"description": "",
+	"lang": "EN",
+	"type": "lighting",
+	"presentation": {
+		"type" : "presentation",
+		"link": "https://docs.google.com/presentation/d/1rrh_UXNxupbaAnOsgO2I7qpRV2Ilpg7uCHFXaHKs6Rk/edit?usp=sharing"
+	},	
+	"folder_path": ""
+}

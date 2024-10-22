@@ -1,0 +1,15 @@
+{
+	"date": "2023-11-1",
+	"place": "Chicago, NA",
+	"eventName": "Kubecon Istio Day NA",
+	"talkName": "Kiali Beyond the Graph - Troubleshooting istio",
+	"description": "",
+	"lang": "EN",
+	"type": "talk",
+	"presentation": {
+		"type" : "youtube",
+		"link": "https://www.youtube.com/embed/MX-Sym2EkGI?si=nf__c_nOZL0rh1rt"
+	},	
+	"folder_path": "https://www.youtube.com/watch?v=MX-Sym2EkGI"
+}
+

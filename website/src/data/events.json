@@ -30,5 +30,37 @@
         "folder_path": "https://github.com/kiali/community/tree/main/2024_10_Setup_your_mesh_ES",
         "path": "events/2024_10_Setup_your_mesh_ES",
         "id": "145105813215"
+    },
+    {
+        "date": "2024-03-20",
+        "place": "Paris, France",
+        "eventName": "Kubecon IstioDay EU",
+        "talkName": "Ambient",
+        "description": "",
+        "lang": "EN",
+        "type": "lighting",
+        "presentation": {
+            "type": "presentation",
+            "link": "https://docs.google.com/presentation/d/1rrh_UXNxupbaAnOsgO2I7qpRV2Ilpg7uCHFXaHKs6Rk/edit?usp=sharing"
+        },
+        "folder_path": "",
+        "path": "events/2024_03_Ambient_Kubecon",
+        "id": "277611753779"
+    },
+    {
+        "date": "2023-11-1",
+        "place": "Chicago, NA",
+        "eventName": "Kubecon Istio Day NA",
+        "talkName": "Kiali Beyond the Graph - Troubleshooting istio",
+        "description": "",
+        "lang": "EN",
+        "type": "talk",
+        "presentation": {
+            "type": "youtube",
+            "link": "https://www.youtube.com/embed/MX-Sym2EkGI?si=nf__c_nOZL0rh1rt"
+        },
+        "folder_path": "https://www.youtube.com/watch?v=MX-Sym2EkGI",
+        "path": "events/2023_11_Kiali Beyond the Graph",
+        "id": "150534735104"
     }
 ]

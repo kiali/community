@@ -12,6 +12,9 @@ const Talk = () => {
     const [openPreview, setOpenPreview] = React.useState(false);
     const talk = events.filter(ev => ev.id === talkId)[0]
 
+    const contentTalk = <TalkView type={talk.presentation.type} link={talk.presentation.link} path={talk.path}/>
+
+
     return (
         <Container fluid>
             <Row>
@@ -59,21 +62,29 @@ const Talk = () => {
                                 
                         </Form>        
                         
-                        <Button
-                            onClick={() => setOpenPreview(!openPreview)}
-                            aria-expanded={openPreview}
-                        >
-                            See Preview
-                        </Button>
-                        <Collapse in={openPreview}>
-                            <div>
-                            <TalkView type={talk.presentation.type} link={talk.presentation.link} path={talk.path}/> 
-                            </div>   
-                        </Collapse>
+                        {talk.type === 'markdown'? (
+                            <>
+                                <Button
+                                onClick={() => setOpenPreview(!openPreview)}
+                                aria-expanded={openPreview}
+                                >
+                                    See Preview
+                                </Button>
+                                <Collapse in={openPreview}>
+                                    <div>
+                                    {contentTalk}
+                                    </div>   
+                                </Collapse>
+                            </>
+                        ):
+                        (contentTalk)}
+                        
                          </Card.Body>
-                         <Card.Body>
-                            <Card.Link target='_blank' href={talk.folder_path}>See {talk.type}</Card.Link>
-                         </Card.Body>
+                         {talk.folder_path !== "" && (
+                            <Card.Body>
+                                <Card.Link target='_blank' href={talk.folder_path}>See {talk.type}</Card.Link>
+                            </Card.Body>
+                         )}
                     </Card>
                 </Col>
             </Row>

@@ -4,8 +4,9 @@ import { Card, Col, Container, Row, Table } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 
 export const iconsType: {[key:string]: string} = {
-    "workshop": "nc-icon nc-tv-2",
-    "talk": "nc-icon nc-audio-92"
+    "workshop": "fas fa-desktop",
+    "talk": "fas fa-microphone",
+    "lighting": "fas fa-bolt"
 }
 
 const Talks = () => {

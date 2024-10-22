@@ -1,5 +1,6 @@
 import React from "react";
 import Markdown from 'react-markdown'
+import ReactGoogleSlides from "react-google-slides";
 
 export const TalkView = (props: {type: string, link: string, path: string}) => {   
     const [content, setContent] = React.useState<string>("# Hey")
@@ -31,6 +32,17 @@ export const TalkView = (props: {type: string, link: string, path: string}) => {
                 <div style={{marginTop: "10px"}}>
                 <iframe width="100%" height="500" src={props.link} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
                 </div>
+            )}
+            {props.type === 'presentation' && (
+                <ReactGoogleSlides
+                width={"100%"}
+                height={600}
+                slidesLink={props.link}
+                slideDuration={10}
+                position={1}
+                showControls
+                allowFullScreen
+              />
             )}
         </>
     )
