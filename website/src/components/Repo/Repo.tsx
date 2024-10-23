@@ -19,18 +19,41 @@ export interface Repository {
     language: {[key: string]: number}
 }
 
-const getLastDate = (stats: string[]) => {
+const getLastDate = (stats: string[]): [Date, Date] => {
     let arrayDates = stats.map((da) => new Date(da) );
-    return arrayDates.reduce((a,b) => a > b ? a : b)
+    const latest = arrayDates.reduce((a,b) => a > b ? a : b)
+    let nearest = Infinity
+    let winner = -1
+    let latestMonth = new Date(latest.getTime());
+    if (latestMonth.getMonth() === 0) {
+        // It's January
+        latestMonth.setFullYear(latestMonth.getFullYear() - 1 )
+        latestMonth.setMonth(11)
+    }else {
+        latestMonth.setMonth(latestMonth.getMonth() - 1)
+    }
+    const latestTime = latestMonth.getTime()
+    arrayDates.forEach((date, index) => {
+        let distance = Math.abs(date.getTime() - latestTime)
+        if (distance < nearest) {
+          nearest = distance
+          winner = index
+        }
+    })
+    const closest = arrayDates[winner]
+    return [latest,closest]
 }
+
 
 const formatDate = (d: Date) => {
     return `${d.getFullYear()}-${('0' + (d.getMonth()+1)).slice(-2)}-${('0' + d.getDate()).slice(-2)}`
 }
 
 export const Repo = (props: {repo: Repository}) => {
-    const date = getLastDate(Object.keys(props.repo.metrics));
-    const met = props.repo.metrics[formatDate(date)]
+    const [latest, closest] = getLastDate(Object.keys(props.repo.metrics));
+    const met = props.repo.metrics[formatDate(latest)];
+    const formatClosest = formatDate(closest);
+    const metLastMonth = props.repo.metrics[formatClosest];
     return (
         <Card>
             <Card.Body>
@@ -70,17 +93,17 @@ export const Repo = (props: {repo: Repository}) => {
                 </Row>
                 <Row><Form.Label column sm={1} style={{fontWeight: "bold"}}>Stats</Form.Label></Row>
                 <Row>
-                      <Col lg="3" sm="6"> <Stat name={"forks"} value={met.forks} /> </Col>
-                      <Col lg="3" sm="6"> <Stat name={"issues"} value={met.issues} /> </Col>
-                      <Col lg="3" sm="6"> <Stat name={"starts"} value={met.stars} /> </Col>
-                      <Col lg="3" sm="6"> <Stat name={"size"} value={met.size} /> </Col>                                   
+                      <Col lg="3" sm="6"> <Stat name={"forks"} value={met.forks} previous={metLastMonth.forks} previousDate={formatClosest} /> </Col>
+                      <Col lg="3" sm="6"> <Stat name={"issues"} value={met.issues} previous={metLastMonth.issues} previousDate={formatClosest}/> </Col>
+                      <Col lg="3" sm="6"> <Stat name={"starts"} value={met.stars} previous={metLastMonth.stars} previousDate={formatClosest}/> </Col>
+                      <Col lg="3" sm="6"> <Stat name={"size"} value={met.size} previous={metLastMonth.size} previousDate={formatClosest}/></Col>                                   
                 </Row>
             </Card.Body>  
             <Card.Footer>
                 <hr></hr>
                 <div className="stats">
                   <i className="fas fa-clock mr-1"></i>
-                  Last update: {date.toLocaleDateString()}
+                  Last update: {latest.toLocaleDateString()}
                 </div>
               </Card.Footer>          
         </Card>

@@ -1,10 +1,11 @@
 import React from "react";
 import { Accordion, Badge, Card, Col, Container, Row, Stack } from "react-bootstrap";
 import { convertBytes } from "../components/Stat/Stat";
-import { Repo, Repository, Stats } from "../components/Repo/Repo";
+import { Repo, Repository } from "../components/Repo/Repo";
 import metrics from "../data/metrics.json";
-import { LineChart, PieChart } from "@mui/x-charts";
+import { PieChart } from "@mui/x-charts";
 import { Box, Slider } from "@mui/material";
+import { MetricChartLine } from "../components/MetricChartLine/MetricChartLine";
 
 export interface MetricsT {
     repositories: {[key: string] : Repository};
@@ -14,40 +15,7 @@ const getPieDataChart = (data: {[key:string]: number}) => {
     return Object.keys(data).map((key, index) => { return {"id": 0, "value": data[key], "label": key}})
 }
 
-const getLineXChart = (data: string[]) => {
-    return data.map(d => new Date(d))
-}
 
-const getSeriesLine = (data: {[key: string]: Stats}) => {
-    Object.values(data).map(v => v.forks)
-
-    return {
-        series: [
-          {
-            label: 'Forks',
-            data: Object.values(data).map(v => v.forks),
-            showMark: false,
-          },
-          {
-            label: 'Stars',
-            data: Object.values(data).map(v => v.stars),
-            showMark: false,
-          },
-          {
-            label: 'Issues',
-            data: Object.values(data).map(v => v.issues),
-            showMark: false,
-          },
-          {
-            label: 'Size',
-            data: Object.values(data).map(v => v.size/1024),
-            showMark: false,
-          },
-        ]
-      };
-}
-
-const yearFormatter = (date: Date) => `${date.getMonth()+1}-${date.getDate()}-${date.getFullYear()}`;
 
 const Metrics = () => {
     const [pieLangSlice, setPieLangSlice] = React.useState(5);
@@ -78,19 +46,9 @@ const Metrics = () => {
             <Card>
               <Card.Header>
                 <Card.Title as="h4">Community grow</Card.Title>
-                <p className="card-category">Forks / Starts / Issues / Size (KB)</p>
               </Card.Header>
               <Card.Body>
-                <div className="ct-chart" id="chartHours">
-                <LineChart
-                    xAxis={[{ data: getLineXChart(Object.keys(data.repositories[repo].metrics)), scaleType: 'time', valueFormatter: yearFormatter }]}            
-                    series={getSeriesLine(data.repositories[repo].metrics).series.map((series) => ({
-                        ...series
-                      }))}
-                    width={800}
-                    height={300}
-                    />
-                </div>
+                <MetricChartLine data={data.repositories[repo].metrics} />               
               </Card.Body>
              
             </Card>

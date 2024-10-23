@@ -1,6 +1,5 @@
 import React from "react";
-import { Card, Col, Row } from "react-bootstrap";
-
+import { Badge, Card, Col, OverlayTrigger, Row, Tooltip } from "react-bootstrap";
 export const convertBytes = (bytes: number, options: { useBinaryUnits?: boolean; decimals?: number } = {}): string => {
   const { useBinaryUnits = false, decimals = 2} = options;
 
@@ -18,7 +17,11 @@ export const convertBytes = (bytes: number, options: { useBinaryUnits?: boolean;
   return `${(bytes / Math.pow(base, i)).toFixed(decimals)} ${units[i]}`;
 }
 
-export const Stat = (props: {name: string, value: number}) => {
+const iconDown = "fas fa-arrow-down"
+const iconUp = "fas fa-arrow-up"
+const equals = "fas fa-equals"
+
+export const Stat = (props: {name: string, value: number, previous: number, previousDate: string}) => {
     var icon = <i className="fas fa-code text-info"/>
 
     switch(props.name) {
@@ -39,19 +42,51 @@ export const Stat = (props: {name: string, value: number}) => {
       break;
     }
 
+    const getContentBadge = () => {
+      const value = props.value - props.previous;      
+      let icon = iconUp
+      icon = value < 0 ? iconDown : value === 0 ? equals : iconUp 
+      if (props.name === "issues") {
+        icon += value > 0 ? " text-danger" : value < 0 ? " text-success" : " text"      
+      } else {
+        icon += value > 0 ? " text-success" : value < 0 ? " text-danger" : " text"   
+      }
+     
+      return (
+        <>
+          <i className={icon}></i> {props.name === "size" ? convertBytes(value*1024): value}
+        </>   
+      )
+    }
+
     return (
         <Card className="card-stats">
               <Card.Body>
                 <Row>
-                  <Col xs="5">
+                  <Col xs="4">
                     <div className="icon-big text-center icon-warning">
                       {icon}
                     </div>
                   </Col>
-                  <Col xs="7">
+                  <Col xs="8">
                     <div className="numbers">
                       <p className="card-category">{props.name}</p>
-                      <Card.Title as="h4">{props.name === "size" ? convertBytes(props.value*1024): props.value}</Card.Title>
+                      <Card.Title as="h4">
+                        <OverlayTrigger 
+                          placement={"bottom"}
+                          overlay={
+                            <Tooltip id={`tooltip-${props.name}`}>
+                              Metric from {props.previousDate}
+                            </Tooltip>
+                          }
+                        >
+                        
+                          <Badge pill bg="light" text="dark" style={{fontSize: "12px", marginRight: "5px"}}>
+                            {getContentBadge()}                   
+                          </Badge>                          
+                        </OverlayTrigger>
+                        {props.name === "size" ? convertBytes(props.value*1024): props.value}
+                      </Card.Title>
                     </div>
                   </Col>
                 </Row>
