@@ -3,7 +3,7 @@ import Markdown from 'react-markdown'
 import ReactGoogleSlides from "react-google-slides";
 
 export const TalkView = (props: {type: string, link: string, path: string}) => {   
-    const [content, setContent] = React.useState<string>("# Hey")
+    const [content, setContent] = React.useState<string>("")
 
     React.useEffect(() => {
         if(props.type === 'markdown'){  
