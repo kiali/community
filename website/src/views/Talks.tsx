@@ -39,7 +39,7 @@ const Talks = () => {
                                     <tbody>
                                         {talks.map(talk => {
                                              return (
-                                                <tr key={`wokshop_${talk.date}_${talk.eventName}`} onClick={() => navigate(`/dashboard/talk/${talk.id}`)}>                                                    
+                                                <tr key={`wokshop_${talk.date}_${talk.eventName}`} onClick={() => navigate(`/talk/${talk.id}`)}>                                                    
                                                     <td>
                                                         <span className="d-inline-block" data-bs-toggle="tooltip" title={`${talk.type}`}>
                                                             <i className={iconsType[talk.type]} />
@@ -49,7 +49,7 @@ const Talks = () => {
                                                     <td>{talk.eventName}</td>
                                                     <td>
                                                     <NavLink
-                                                        to={`/dashboard/talk/${talk.id}`}
+                                                        to={`/talk/${talk.id}`}
                                                         className="nav-link"
                                                     >
                                                         {talk.talkName}

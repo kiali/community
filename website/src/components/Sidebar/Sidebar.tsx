@@ -42,7 +42,7 @@ export const Sidebar = (props: {routes: routeDash[]}) => {
                                 key={key}
                                 >
                                 <NavLink
-                                    to={prop.layout + prop.path}
+                                    to={prop.path}
                                     className="nav-link"
                                 >
                                     <i className={prop.icon} />

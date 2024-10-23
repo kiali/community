@@ -23,12 +23,12 @@ root.render(
     <Routes>
       {dashboardRoutes.map( rout => 
       (
-        <Route key={`path_${rout.layout + rout.path}`} path={rout.layout + rout.path} element={rout.component} />
+        <Route key={`path_${rout.layout + rout.path}`} path={ rout.path} element={rout.component} />
       )
       )}
       {extraRoutes.map( rout => 
       (
-        <Route key={`path_${rout.layout + rout.path}`} path={rout.layout + rout.path} element={rout.component} />
+        <Route key={`path_${rout.layout + rout.path}`} path={rout.path} element={rout.component} />
       )
       )}
       <Route path="*" element={<Navigate to="/dashboard/" replace />} />
