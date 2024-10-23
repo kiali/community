@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { HashRouter, Route, Routes, Navigate } from "react-router-dom";
 
 /* CSS */
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -19,7 +19,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <HashRouter>
     <Routes>
       {dashboardRoutes.map( rout => 
       (
@@ -33,7 +33,7 @@ root.render(
       )}
       <Route path="*" element={<Navigate to="/dashboard/" replace />} />
     </Routes>
-  </BrowserRouter>
+  </HashRouter>
   </React.StrictMode>
 );
 
