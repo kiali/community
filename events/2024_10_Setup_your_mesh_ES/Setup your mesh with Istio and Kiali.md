@@ -220,7 +220,10 @@ vim $ISTIO_HOME/samples/addons/kiali.yaml
         root_namespace: istio-system
       tracing:
         enabled: true
-        external_url: "http://localhost:16686/jaeger"
+        url: "http://localhost:16686/jaeger"
+      grafana:
+        enabled: true
+        url: "http://localhost:3000"
 ```
 
 Aplicamos el yaml:
