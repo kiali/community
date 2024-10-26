@@ -61,6 +61,10 @@ const Talk = () => {
                                 </Form.Group>
                                 
                         </Form>        
+
+                        {talk.folder_path !== "" && (
+                                <Card.Link target='_blank' href={talk.folder_path}>See {talk.type}</Card.Link>
+                         )}
                         
                         {talk.type === 'markdown'? (
                             <>
@@ -80,11 +84,6 @@ const Talk = () => {
                         (contentTalk)}
                         
                          </Card.Body>
-                         {talk.folder_path !== "" && (
-                            <Card.Body>
-                                <Card.Link target='_blank' href={talk.folder_path}>See {talk.type}</Card.Link>
-                            </Card.Body>
-                         )}
                     </Card>
                 </Col>
             </Row>
