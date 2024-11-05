@@ -96,10 +96,16 @@
                     "issues": 132,
                     "stars": 3392,
                     "size": 66336
+                },
+                "2024-11-04": {
+                    "forks": 490,
+                    "issues": 132,
+                    "stars": 3393,
+                    "size": 66343
                 }
             },
             "language": {
-                "TypeScript": 3739610,
+                "TypeScript": 3739200,
                 "Go": 3680160,
                 "Shell": 767367,
                 "Gherkin": 215444,
