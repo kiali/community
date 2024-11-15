@@ -138,14 +138,20 @@
                     "issues": 136,
                     "stars": 3398,
                     "size": 66590
+                },
+                "2024-11-14": {
+                    "forks": 491,
+                    "issues": 131,
+                    "stars": 3399,
+                    "size": 66906
                 }
             },
             "language": {
-                "TypeScript": 3745292,
-                "Go": 3690908,
-                "Shell": 771528,
-                "Gherkin": 212591,
-                "Makefile": 98404,
+                "TypeScript": 3745810,
+                "Go": 3718156,
+                "Shell": 772381,
+                "Gherkin": 212622,
+                "Makefile": 99126,
                 "SCSS": 41157,
                 "HTML": 2079,
                 "Dockerfile": 1565,
