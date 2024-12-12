@@ -246,12 +246,18 @@
                     "issues": 134,
                     "stars": 3412,
                     "size": 67695
+                },
+                "2024-12-11": {
+                    "forks": 496,
+                    "issues": 135,
+                    "stars": 3413,
+                    "size": 67695
                 }
             },
             "language": {
                 "TypeScript": 3781757,
                 "Go": 3745415,
-                "Shell": 774963,
+                "Shell": 774972,
                 "Gherkin": 212622,
                 "Makefile": 99031,
                 "SCSS": 41157,
