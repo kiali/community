@@ -324,6 +324,12 @@
                     "issues": 138,
                     "stars": 3414,
                     "size": 67447
+                },
+                "2025-01-03": {
+                    "forks": 497,
+                    "issues": 141,
+                    "stars": 3413,
+                    "size": 67447
                 }
             },
             "language": {
@@ -582,10 +588,16 @@
                     "issues": 2,
                     "stars": 7,
                     "size": 9997
+                },
+                "2025-01-03": {
+                    "forks": 17,
+                    "issues": 1,
+                    "stars": 7,
+                    "size": 9998
                 }
             },
             "language": {
-                "TypeScript": 3800213,
+                "TypeScript": 3850452,
                 "Gherkin": 215995,
                 "SCSS": 41251,
                 "Makefile": 17312,
