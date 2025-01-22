@@ -396,10 +396,16 @@
                     "issues": 137,
                     "stars": 3420,
                     "size": 67422
+                },
+                "2025-01-22": {
+                    "forks": 500,
+                    "issues": 135,
+                    "stars": 3425,
+                    "size": 67439
                 }
             },
             "language": {
-                "TypeScript": 3826908,
+                "TypeScript": 3827080,
                 "Go": 3813787,
                 "Shell": 775543,
                 "Gherkin": 214431,
@@ -567,6 +573,12 @@
                     "issues": 3,
                     "stars": 81,
                     "size": 2684
+                },
+                "2025-01-21": {
+                    "forks": 118,
+                    "issues": 1,
+                    "stars": 81,
+                    "size": 2688
                 }
             },
             "language": {
