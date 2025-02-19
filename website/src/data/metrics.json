@@ -495,11 +495,11 @@
                 }
             },
             "language": {
-                "Go": 3874174,
+                "Go": 3874592,
                 "TypeScript": 3861309,
-                "Shell": 785439,
+                "Shell": 785460,
                 "Gherkin": 217030,
-                "Makefile": 100969,
+                "Makefile": 102536,
                 "SCSS": 41157,
                 "HTML": 2079,
                 "Dockerfile": 1565,
