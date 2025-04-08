@@ -696,6 +696,12 @@
                     "issues": 144,
                     "stars": 3453,
                     "size": 68658
+                },
+                "2025-04-07": {
+                    "forks": 511,
+                    "issues": 145,
+                    "stars": 3454,
+                    "size": 68732
                 }
             },
             "language": {
@@ -963,13 +969,19 @@
                     "issues": 1,
                     "stars": 82,
                     "size": 2790
+                },
+                "2025-04-07": {
+                    "forks": 118,
+                    "issues": 2,
+                    "stars": 82,
+                    "size": 2808
                 }
             },
             "language": {
                 "Shell": 64597,
-                "Dockerfile": 47805,
+                "Dockerfile": 48275,
                 "Python": 20670,
-                "Makefile": 14664
+                "Makefile": 14414
             }
         },
         "openshift-servicemesh-plugin": {
