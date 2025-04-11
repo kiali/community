@@ -714,10 +714,16 @@
                     "issues": 152,
                     "stars": 3455,
                     "size": 68768
+                },
+                "2025-04-10": {
+                    "forks": 512,
+                    "issues": 150,
+                    "stars": 3455,
+                    "size": 68772
                 }
             },
             "language": {
-                "Go": 3955269,
+                "Go": 3957055,
                 "TypeScript": 3509630,
                 "Shell": 800958,
                 "Gherkin": 186574,
@@ -1188,6 +1194,12 @@
                     "issues": 5,
                     "stars": 7,
                     "size": 9460
+                },
+                "2025-04-10": {
+                    "forks": 17,
+                    "issues": 5,
+                    "stars": 7,
+                    "size": 9703
                 }
             },
             "language": {
