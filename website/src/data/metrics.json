@@ -936,12 +936,18 @@
                     "issues": 142,
                     "stars": 3470,
                     "size": 69865
+                },
+                "2025-05-30": {
+                    "forks": 517,
+                    "issues": 138,
+                    "stars": 3471,
+                    "size": 69834
                 }
             },
             "language": {
                 "Go": 4106576,
-                "TypeScript": 3539652,
-                "Shell": 805167,
+                "TypeScript": 3539621,
+                "Shell": 812078,
                 "Gherkin": 192190,
                 "Makefile": 104492,
                 "SCSS": 41157,
