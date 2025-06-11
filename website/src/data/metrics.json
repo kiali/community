@@ -1602,11 +1602,17 @@
                     "issues": 5,
                     "stars": 7,
                     "size": 9652
+                },
+                "2025-06-10": {
+                    "forks": 17,
+                    "issues": 3,
+                    "stars": 7,
+                    "size": 9683
                 }
             },
             "language": {
-                "TypeScript": 3590713,
-                "Gherkin": 212337,
+                "TypeScript": 3605016,
+                "Gherkin": 212285,
                 "SCSS": 41251,
                 "Makefile": 17313,
                 "Shell": 13179,
