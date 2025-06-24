@@ -1020,6 +1020,12 @@
                     "issues": 135,
                     "stars": 3474,
                     "size": 69990
+                },
+                "2025-06-23": {
+                    "forks": 518,
+                    "issues": 136,
+                    "stars": 3475,
+                    "size": 69995
                 }
             },
             "language": {
@@ -1027,7 +1033,7 @@
                 "TypeScript": 3561027,
                 "Shell": 808956,
                 "Gherkin": 192138,
-                "Makefile": 104429,
+                "Makefile": 104676,
                 "SCSS": 41157,
                 "HTML": 2079,
                 "Dockerfile": 1595,
