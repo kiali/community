@@ -1056,6 +1056,12 @@
                     "issues": 132,
                     "stars": 3479,
                     "size": 70098
+                },
+                "2025-06-30": {
+                    "forks": 515,
+                    "issues": 133,
+                    "stars": 3481,
+                    "size": 70112
                 }
             },
             "language": {
@@ -1449,11 +1455,17 @@
                     "issues": 4,
                     "stars": 84,
                     "size": 2677
+                },
+                "2025-06-30": {
+                    "forks": 119,
+                    "issues": 5,
+                    "stars": 84,
+                    "size": 2719
                 }
             },
             "language": {
                 "Shell": 64597,
-                "Dockerfile": 28535,
+                "Dockerfile": 29005,
                 "Python": 27842,
                 "Makefile": 9757
             }
