@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "https://kiali.org/community/static/css/main.a6543018.css",
-    "main.js": "https://kiali.org/community/static/js/main.9cb7bec7.js",
+    "main.js": "https://kiali.org/community/static/js/main.11b6f0c4.js",
     "static/js/453.bb828c5d.chunk.js": "https://kiali.org/community/static/js/453.bb828c5d.chunk.js",
     "static/media/fa-solid-900.svg": "https://kiali.org/community/static/media/fa-solid-900.0454203f26b33fc02e2b.svg",
     "static/media/fa-brands-400.svg": "https://kiali.org/community/static/media/fa-brands-400.991c1c761fc31f9c3252.svg",
@@ -22,11 +22,11 @@
     "static/media/kiali_icon_darkbkg_1280px.svg": "https://kiali.org/community/static/media/kiali_icon_darkbkg_1280px.1379bb2589cc05bcd10759391b4d1b97.svg",
     "index.html": "https://kiali.org/community/index.html",
     "main.a6543018.css.map": "https://kiali.org/community/static/css/main.a6543018.css.map",
-    "main.9cb7bec7.js.map": "https://kiali.org/community/static/js/main.9cb7bec7.js.map",
+    "main.11b6f0c4.js.map": "https://kiali.org/community/static/js/main.11b6f0c4.js.map",
     "453.bb828c5d.chunk.js.map": "https://kiali.org/community/static/js/453.bb828c5d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a6543018.css",
-    "static/js/main.9cb7bec7.js"
+    "static/js/main.11b6f0c4.js"
   ]
 }
