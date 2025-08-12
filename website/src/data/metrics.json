@@ -1230,6 +1230,12 @@
                     "issues": 135,
                     "stars": 3494,
                     "size": 70508
+                },
+                "2025-08-11": {
+                    "forks": 524,
+                    "issues": 139,
+                    "stars": 3495,
+                    "size": 70560
                 }
             },
             "language": {
@@ -1683,11 +1689,17 @@
                     "issues": 5,
                     "stars": 85,
                     "size": 2731
+                },
+                "2025-08-11": {
+                    "forks": 122,
+                    "issues": 4,
+                    "stars": 85,
+                    "size": 2706
                 }
             },
             "language": {
                 "Shell": 64296,
-                "Dockerfile": 29475,
+                "Dockerfile": 29945,
                 "Python": 27842,
                 "Makefile": 10885
             }
@@ -1986,6 +1998,12 @@
                     "issues": 2,
                     "stars": 7,
                     "size": 9861
+                },
+                "2025-08-11": {
+                    "forks": 17,
+                    "issues": 2,
+                    "stars": 7,
+                    "size": 9867
                 }
             },
             "language": {
