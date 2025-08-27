@@ -1290,14 +1290,20 @@
                     "issues": 135,
                     "stars": 3496,
                     "size": 70696
+                },
+                "2025-08-26": {
+                    "forks": 525,
+                    "issues": 139,
+                    "stars": 3496,
+                    "size": 70762
                 }
             },
             "language": {
-                "Go": 4208866,
-                "TypeScript": 3597892,
-                "Shell": 863164,
+                "Go": 4232010,
+                "TypeScript": 3598060,
+                "Shell": 865566,
                 "Gherkin": 198956,
-                "Makefile": 104547,
+                "Makefile": 105221,
                 "SCSS": 41157,
                 "HTML": 2079,
                 "Dockerfile": 1595,
