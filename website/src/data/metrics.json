@@ -1704,12 +1704,18 @@
                     "issues": 141,
                     "stars": 3542,
                     "size": 74015
+                },
+                "2025-12-12": {
+                    "forks": 532,
+                    "issues": 139,
+                    "stars": 3543,
+                    "size": 74023
                 }
             },
             "language": {
                 "Go": 4394573,
-                "TypeScript": 3673597,
-                "Shell": 1075702,
+                "TypeScript": 3673932,
+                "Shell": 1079435,
                 "Gherkin": 208029,
                 "Makefile": 106768,
                 "SCSS": 40852,
