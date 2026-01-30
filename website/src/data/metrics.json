@@ -1896,14 +1896,20 @@
                     "issues": 167,
                     "stars": 3561,
                     "size": 75274
+                },
+                "2026-01-29": {
+                    "forks": 535,
+                    "issues": 164,
+                    "stars": 3560,
+                    "size": 75357
                 }
             },
             "language": {
                 "Go": 5005592,
-                "TypeScript": 3975103,
-                "Shell": 1084101,
+                "TypeScript": 3975424,
+                "Shell": 1105265,
                 "Gherkin": 211406,
-                "Makefile": 107998,
+                "Makefile": 108866,
                 "SCSS": 40984,
                 "HTML": 2079,
                 "Dockerfile": 1595,
@@ -2601,11 +2607,17 @@
                     "issues": 1,
                     "stars": 88,
                     "size": 2996
+                },
+                "2026-01-29": {
+                    "forks": 126,
+                    "issues": 1,
+                    "stars": 88,
+                    "size": 2926
                 }
             },
             "language": {
                 "Shell": 113259,
-                "Python": 34018,
+                "Python": 35514,
                 "Dockerfile": 33403,
                 "Makefile": 18186
             }
