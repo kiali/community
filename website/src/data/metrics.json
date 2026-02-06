@@ -1926,18 +1926,24 @@
                     "issues": 169,
                     "stars": 3564,
                     "size": 75747
+                },
+                "2026-02-05": {
+                    "forks": 536,
+                    "issues": 166,
+                    "stars": 3563,
+                    "size": 75760
                 }
             },
             "language": {
-                "Go": 5128549,
-                "TypeScript": 3999749,
+                "Go": 5132165,
+                "TypeScript": 3998259,
                 "Shell": 1143218,
                 "Gherkin": 211332,
                 "Makefile": 108866,
                 "SCSS": 11277,
                 "HTML": 2079,
                 "Dockerfile": 1595,
-                "JavaScript": 1284,
+                "JavaScript": 1358,
                 "Python": 246
             }
         },
