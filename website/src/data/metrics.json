@@ -1992,12 +1992,18 @@
                     "issues": 141,
                     "stars": 3571,
                     "size": 76108
+                },
+                "2026-02-26": {
+                    "forks": 539,
+                    "issues": 149,
+                    "stars": 3572,
+                    "size": 76133
                 }
             },
             "language": {
-                "Go": 5254745,
+                "Go": 5275611,
                 "TypeScript": 4230843,
-                "Shell": 1341249,
+                "Shell": 1341914,
                 "Gherkin": 237060,
                 "Makefile": 108866,
                 "SCSS": 11277,
