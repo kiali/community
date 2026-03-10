@@ -2028,10 +2028,16 @@
                     "issues": 145,
                     "stars": 3578,
                     "size": 76885
+                },
+                "2026-03-10": {
+                    "forks": 541,
+                    "issues": 148,
+                    "stars": 3579,
+                    "size": 77318
                 }
             },
             "language": {
-                "Go": 5371547,
+                "Go": 5372678,
                 "TypeScript": 4248304,
                 "Shell": 1341051,
                 "Gherkin": 212527,
@@ -2793,12 +2799,18 @@
                     "issues": 1,
                     "stars": 90,
                     "size": 3007
+                },
+                "2026-03-09": {
+                    "forks": 126,
+                    "issues": 1,
+                    "stars": 90,
+                    "size": 2961
                 }
             },
             "language": {
                 "Shell": 113259,
                 "Python": 42686,
-                "Dockerfile": 33873,
+                "Dockerfile": 34343,
                 "Makefile": 18186
             }
         },
