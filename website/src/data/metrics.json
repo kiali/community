@@ -2076,10 +2076,16 @@
                     "issues": 162,
                     "stars": 3579,
                     "size": 77324
+                },
+                "2026-03-20": {
+                    "forks": 543,
+                    "issues": 160,
+                    "stars": 3579,
+                    "size": 77338
                 }
             },
             "language": {
-                "Go": 5571088,
+                "Go": 5606218,
                 "TypeScript": 4290255,
                 "Shell": 1354851,
                 "Gherkin": 213076,
