@@ -2274,11 +2274,17 @@
                     "issues": 136,
                     "stars": 3606,
                     "size": 79186
+                },
+                "2026-05-04": {
+                    "forks": 549,
+                    "issues": 143,
+                    "stars": 3607,
+                    "size": 79246
                 }
             },
             "language": {
                 "Go": 6083927,
-                "TypeScript": 4392763,
+                "TypeScript": 4392851,
                 "Shell": 1383943,
                 "Gherkin": 221908,
                 "Makefile": 116443,
