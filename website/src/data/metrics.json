@@ -2370,12 +2370,18 @@
                     "issues": 128,
                     "stars": 3616,
                     "size": 81153
+                },
+                "2026-05-28": {
+                    "forks": 556,
+                    "issues": 136,
+                    "stars": 3615,
+                    "size": 81658
                 }
             },
             "language": {
-                "Go": 6397177,
-                "TypeScript": 4668006,
-                "Shell": 1385725,
+                "Go": 6403505,
+                "TypeScript": 4675409,
+                "Shell": 1386098,
                 "Gherkin": 241069,
                 "Makefile": 116561,
                 "SCSS": 9628,
@@ -3225,6 +3231,12 @@
                     "issues": 3,
                     "stars": 90,
                     "size": 3160
+                },
+                "2026-05-28": {
+                    "forks": 128,
+                    "issues": 5,
+                    "stars": 90,
+                    "size": 3162
                 }
             },
             "language": {
@@ -3930,6 +3942,12 @@
                     "issues": 5,
                     "stars": 8,
                     "size": 12075
+                },
+                "2026-05-28": {
+                    "forks": 20,
+                    "issues": 6,
+                    "stars": 8,
+                    "size": 12077
                 }
             },
             "language": {
