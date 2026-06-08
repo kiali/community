@@ -2418,13 +2418,19 @@
                     "issues": 142,
                     "stars": 3617,
                     "size": 81881
+                },
+                "2026-06-08": {
+                    "forks": 554,
+                    "issues": 140,
+                    "stars": 3617,
+                    "size": 81865
                 }
             },
             "language": {
-                "Go": 6503638,
-                "TypeScript": 4676702,
+                "Go": 6512650,
+                "TypeScript": 4679197,
                 "Shell": 1438194,
-                "Gherkin": 241360,
+                "Gherkin": 241872,
                 "Makefile": 116561,
                 "SCSS": 9628,
                 "HTML": 2103,
