@@ -2664,16 +2664,22 @@
                     "issues": 114,
                     "stars": 3629,
                     "size": 90825
+                },
+                "2026-08-06": {
+                    "forks": 566,
+                    "issues": 103,
+                    "stars": 3628,
+                    "size": 91057
                 }
             },
             "language": {
-                "Go": 6935015,
-                "TypeScript": 4862716,
-                "Shell": 1521679,
+                "Go": 7006447,
+                "TypeScript": 4865651,
+                "Shell": 1521438,
                 "Gherkin": 253754,
                 "Makefile": 116888,
                 "SCSS": 9628,
-                "JavaScript": 7620,
+                "JavaScript": 7896,
                 "Dockerfile": 1595,
                 "HTML": 1254
             }
@@ -3662,13 +3668,19 @@
                     "issues": 5,
                     "stars": 91,
                     "size": 3254
+                },
+                "2026-08-05": {
+                    "forks": 131,
+                    "issues": 4,
+                    "stars": 91,
+                    "size": 3262
                 }
             },
             "language": {
-                "Shell": 113497,
+                "Shell": 121097,
                 "Python": 49858,
                 "Dockerfile": 37633,
-                "Makefile": 18186
+                "Makefile": 18690
             }
         },
         "openshift-servicemesh-plugin": {
