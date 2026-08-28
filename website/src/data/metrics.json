@@ -2745,9 +2745,9 @@
                 }
             },
             "language": {
-                "Go": 7039474,
-                "TypeScript": 4905098,
-                "Shell": 1532310,
+                "Go": 7081376,
+                "TypeScript": 4908831,
+                "Shell": 1534074,
                 "Gherkin": 256717,
                 "Makefile": 116946,
                 "SCSS": 9628,
