@@ -2916,10 +2916,16 @@
                     "issues": 92,
                     "stars": 3646,
                     "size": 93599
+                },
+                "2026-10-21": {
+                    "forks": 571,
+                    "issues": 94,
+                    "stars": 3647,
+                    "size": 93793
                 }
             },
             "language": {
-                "Go": 7391018,
+                "Go": 7437886,
                 "TypeScript": 5227867,
                 "Shell": 1660111,
                 "Gherkin": 259647,
