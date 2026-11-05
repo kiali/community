@@ -2973,16 +2973,16 @@
                 }
             },
             "language": {
-                "Go": 7879223,
-                "TypeScript": 5275062,
+                "Go": 7880265,
+                "TypeScript": 5318017,
                 "Shell": 1660503,
                 "Gherkin": 259647,
                 "Makefile": 117671,
-                "SCSS": 9692,
                 "JavaScript": 8210,
                 "Python": 7930,
                 "Dockerfile": 1595,
-                "HTML": 1254
+                "HTML": 1254,
+                "SCSS": 244
             }
         },
         "kiali-operator": {
@@ -4101,6 +4101,12 @@
                     "issues": 1,
                     "stars": 92,
                     "size": 3386
+                },
+                "2026-11-04": {
+                    "forks": 133,
+                    "issues": 1,
+                    "stars": 92,
+                    "size": 3388
                 }
             },
             "language": {
@@ -5108,6 +5114,12 @@
                     "size": 16371
                 },
                 "2026-11-04": {
+                    "forks": 20,
+                    "issues": 13,
+                    "stars": 8,
+                    "size": 16332
+                },
+                "2026-11-05": {
                     "forks": 20,
                     "issues": 13,
                     "stars": 8,
