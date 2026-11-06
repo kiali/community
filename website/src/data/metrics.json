@@ -2970,11 +2970,17 @@
                     "issues": 105,
                     "stars": 3648,
                     "size": 94175
+                },
+                "2026-11-05": {
+                    "forks": 575,
+                    "issues": 102,
+                    "stars": 3648,
+                    "size": 94381
                 }
             },
             "language": {
                 "Go": 7880265,
-                "TypeScript": 5318017,
+                "TypeScript": 5335761,
                 "Shell": 1660503,
                 "Gherkin": 259647,
                 "Makefile": 117671,
