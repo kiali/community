@@ -3015,7 +3015,7 @@
                 }
             },
             "language": {
-                "Go": 8004519,
+                "Go": 8126611,
                 "TypeScript": 5454965,
                 "Shell": 1674028,
                 "Gherkin": 259665,
@@ -4154,7 +4154,7 @@
             "language": {
                 "Shell": 122746,
                 "Python": 112717,
-                "Dockerfile": 39730,
+                "Dockerfile": 40200,
                 "Makefile": 18690
             }
         },
@@ -5181,8 +5181,8 @@
                 }
             },
             "language": {
-                "TypeScript": 6113576,
-                "Gherkin": 261663,
+                "TypeScript": 6232768,
+                "Gherkin": 261681,
                 "Shell": 174277,
                 "Makefile": 23610,
                 "JavaScript": 6700,
