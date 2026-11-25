@@ -3036,13 +3036,19 @@
                     "issues": 102,
                     "stars": 3650,
                     "size": 95849
+                },
+                "2026-11-24": {
+                    "forks": 576,
+                    "issues": 99,
+                    "stars": 3651,
+                    "size": 94721
                 }
             },
             "language": {
-                "Go": 8185620,
-                "TypeScript": 5496694,
-                "Shell": 1674699,
-                "Gherkin": 259841,
+                "Go": 8211363,
+                "TypeScript": 5493783,
+                "Shell": 1674701,
+                "Gherkin": 259303,
                 "Makefile": 117671,
                 "Python": 7930,
                 "JavaScript": 7508,
