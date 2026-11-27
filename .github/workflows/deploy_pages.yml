@@ -4,9 +4,14 @@ on:
   push:
     branches:
       - main
+
+permissions: read-all
+
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest    
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout 🛎️  
